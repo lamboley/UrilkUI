@@ -41,6 +41,13 @@ function Auras.CreateSettings()
         width = 'full',
     }
 
+    -- Crux Header
+    optionsDataAuras[#optionsDataAuras + 1] = {
+        type = 'header',
+        name = 'Crux',
+        width = 'full',
+    }
+
     LAM:RegisterAddonPanel(UUI.name .. 'AurasOptions', panelDataAuras)
     LAM:RegisterOptionControls(UUI.name .. 'AurasOptions', optionsDataAuras)
 end

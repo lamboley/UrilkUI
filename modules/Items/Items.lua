@@ -15,12 +15,19 @@ Items.SV = {}
 
 Items.Defaults = {
     name = 'Items',
+    goldDepositEnabled = true,
+    goldToKeep = 10000,
 }
 
-local function OnBankOpen(eventCode, bankBag)
-    println('ITEMS', 'EVENT_OPEN_BANK')
-    -- PAB.depositOrWithdrawCurrencies()
-    -- executeBankingItemTransfers()
+-- -----------------------------------------------------------------------------
+-- https://esoapi.uesp.net/100024/src/ingame/inventory/inventory.lua.html#2010
+function Items.OnBankOpen(eventCode, bankBag)
+    if Items.SV.goldDepositEnabled then
+        local currentGold = GetCurrencyAmount(CURT_MONEY, CURRENCY_LOCATION_CHARACTER)
+        if currentGold > Items.SV.goldToKeep then
+            TransferCurrency(CURT_MONEY, currentGold-Items.SV.goldToKeep, CURRENCY_LOCATION_CHARACTER, CURRENCY_LOCATION_BANK)
+        end
+    end
 end
 
 function Items.Initialize(enabled)
@@ -29,5 +36,5 @@ function Items.Initialize(enabled)
         return
     end
 
-    eventManager:RegisterForEvent("Items.OpenBank", EVENT_OPEN_BANK, OnBankOpen)
+    eventManager:RegisterForEvent('Items.OpenBank', EVENT_OPEN_BANK, Items.OnBankOpen)
 end

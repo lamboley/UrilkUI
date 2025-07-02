@@ -1,22 +1,12 @@
 local UUI = UUI
 
 -- -----------------------------------------------------------------------------
--- https://esoapi.uesp.net/current/src/ingame/chatsystem/chathandlers.lua.html#422
-do
-    local function AddSystemMessage(messageText)
-        CHAT_ROUTER:AddSystemMessage(messageText)
-    end
-
-    UUI.AddSystemMessage = AddSystemMessage
-end
-
--- -----------------------------------------------------------------------------
---- currently supports one text and n arguments
+-- https://esoapi.uesp.net/100013/data/a/d/d/AddMessage.html
 do
     local function println(prefix, line, ...)
         local prefix = prefix or "General"
 
-        CHAT_SYSTEM:AddMessage(table.concat({UUI.name, ' - ', prefix, ": ", text, ...}))
+        CHAT_SYSTEM:AddMessage(table.concat({UUI.name, ' - ', prefix, ": ", line, ...}))
     end
 
     UUI.println = println
