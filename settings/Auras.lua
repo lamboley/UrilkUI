@@ -1,10 +1,10 @@
 
 local UUI = UUI
 local Auras = UUI.Auras
-
-local zo_strformat = zo_strformat
-
 local LAM = UUI.LAM
+
+-- ESO API Locals
+local zo_strformat = zo_strformat
 
 function Auras.CreateSettings()
     if not UUI.SV.AurasEnabled then

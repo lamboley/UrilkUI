@@ -1,5 +1,6 @@
 local UUI = UUI
 
+-- ESO API Locals
 local eventManager = GetEventManager()
 
 eventManager:RegisterForEvent(UUI.name, EVENT_ADD_ON_LOADED, function (eventId, addonName)

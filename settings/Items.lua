@@ -1,10 +1,10 @@
 
 local UUI = UUI
 local Items = UUI.Items
-
-local zo_strformat = zo_strformat
-
 local LAM = UUI.LAM
+
+-- ESO API Locals
+local zo_strformat = zo_strformat
 
 function Items.CreateSettings()
     if not UUI.SV.ItemsEnabled then
@@ -87,6 +87,34 @@ function Items.CreateSettings()
         type = 'header',
         name = 'Bank Management',
         width = 'full',
+    }
+
+    -- Enable deposit of items in bank
+    optionsDataItems[#optionsDataItems + 1] = {
+        type = 'checkbox',
+        name = 'Automaticaly deposit items in the bank',
+        getFunc = function()
+            return Settings.itemDepositEnabled
+        end,
+        setFunc = function(value)
+            Settings.itemDepositEnabled = value
+        end,
+        width = 'full',
+        default = Defaults.itemDepositEnabled,
+    }
+
+    -- Enable withdraw of items from bank
+    optionsDataItems[#optionsDataItems + 1] = {
+        type = 'checkbox',
+        name = 'Automaticaly withdraw items from bank',
+        getFunc = function()
+            return Settings.itemWithdrawEnabled
+        end,
+        setFunc = function(value)
+            Settings.itemWithdrawEnabled = value
+        end,
+        width = 'full',
+        default = Defaults.itemWithdrawEnabled,
     }
 
     LAM:RegisterAddonPanel(UUI.name .. 'ItemsOptions', panelDataItems)

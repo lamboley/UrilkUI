@@ -1,5 +1,4 @@
 local UUI = UUI
-
 local LAM = UUI.LAM
 
 function UUI.CreateSettings()

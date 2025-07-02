@@ -1,15 +1,19 @@
 local UUI = UUI
-local Auras = {}
-UUI.Auras = Auras
 
+-- Lua Locals
+local math_rad = math.rad
+
+-- ESO API Locals
 local eventManager = GetEventManager()
 local sceneManager = SCENE_MANAGER
 local windowManager = GetWindowManager()
 
-local LAM = UUI.LAM
+local GetUnitClassId = GetUnitClassId
+
+local Auras = {}
+UUI.Auras = Auras
 
 Auras.SV = {}
-
 Auras.Defaults = {
     name = 'Auras',
     stacks = 0,
@@ -52,7 +56,7 @@ function Auras.Initialize(enabled)
         cruxFill:SetAnchor(BOTTOMLEFT, AurasContainer, BOTTOMLEFT, 0 + additionalMovement[i], -65 * i)
         cruxFill:SetTexture("esoui/art/icons/class/gamepad/gp_class_arcanist.dds")
         cruxFill:SetDrawLayer(1)
-        cruxFill:SetTransformRotationZ(math.rad(rotations[i]))
+        cruxFill:SetTransformRotationZ(math_rad(rotations[i]))
     end
 
     AurasContainer:ClearAnchors()

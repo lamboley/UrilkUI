@@ -1,6 +1,4 @@
 UUI = {}
--- UUI.__index = UUI
-
 local UUI = UUI
 
 UUI.tag = 'UUI'
