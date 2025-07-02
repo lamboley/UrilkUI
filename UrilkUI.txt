@@ -9,12 +9,14 @@
 ## SavedVariables: UUISV
 
 src/UrilkUI.lua
+src/Functions.lua
 
-#modules/CurvedBars/CurvedBars.lua
-modules/CruxTracker/CruxTracker.lua
+modules/Auras/Auras.lua
+modules/Items/Items.lua
 
 settings/Settings.lua
-settings/CruxTracker.lua
+settings/Auras.lua
+settings/Items.lua
 
 src/Initialize.lua
 

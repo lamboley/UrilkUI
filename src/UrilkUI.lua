@@ -15,5 +15,7 @@ UUI.SVVer = 2
 UUI.SVName = 'UUISV'
 
 UUI.Defaults = {
-    CruxTrackerEnabled = true,
+    debug = false,
+    AurasEnabled = true,
+    ItemsEnabled = true,
 }

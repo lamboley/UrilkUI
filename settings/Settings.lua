@@ -2,7 +2,6 @@ local UUI = UUI
 
 local LAM = UUI.LAM
 
--- Create Settings Menu
 function UUI.CreateSettings()
     local Defaults = UUI.Defaults
     local Settings = UUI.SV
@@ -10,14 +9,26 @@ function UUI.CreateSettings()
     local optionsData = {}
 
     local panelData = {
-        type = "panel",
+        type = 'panel',
         name = UUI.name,
         displayName = UUI.name,
         author = UUI.author .. "\n",
         version = UUI.version,
-        slashCommand = "/luiset",
         registerForRefresh = true,
         registerForDefaults = false,
+    }
+
+    optionsData[#optionsData + 1] = {
+        type = 'checkbox',
+        name = 'Debug',
+        getFunc = function ()
+            return Settings.debug
+        end,
+        setFunc = function (value)
+            Settings.debug = value
+        end,
+        width = 'half',
+        default = Defaults.debug,
     }
 
     optionsData[#optionsData + 1] = {
@@ -27,7 +38,7 @@ function UUI.CreateSettings()
         func = function ()
             ReloadUI('ingame')
         end,
-        width = 'full',
+        width = 'half',
     }
 
     -- Modules Header
@@ -37,25 +48,46 @@ function UUI.CreateSettings()
         width = 'full',
     }
 
-    -- Show CruxTracker
+    -- Auras Module
     optionsData[#optionsData + 1] = {
         type = "checkbox",
-        name = 'Crux Tracker Module',
+        name = 'Auras Module',
         getFunc = function ()
-            return Settings.CruxTrackerEnabled
+            return Settings.AurasEnabled
         end,
         setFunc = function (value)
-            Settings.CruxTrackerEnabled = value
+            Settings.AurasEnabled = value
         end,
         width = 'half',
         warning = 'This will need a reaload to take effect.',
-        default = Defaults.CruxTrackerEnabled,
+        default = Defaults.AurasEnabled,
     }
 
     optionsData[#optionsData + 1] = {
         type = 'description',
         width = 'half',
-        text = 'Display crux available.',
+        text = 'Do things related to auras.',
+    }
+
+    -- Items Module
+    optionsData[#optionsData + 1] = {
+        type = "checkbox",
+        name = 'Items Module',
+        getFunc = function ()
+            return Settings.ItemsEnabled
+        end,
+        setFunc = function (value)
+            Settings.ItemsEnabled = value
+        end,
+        width = 'half',
+        warning = 'This will need a reaload to take effect.',
+        default = Defaults.ItemsEnabled,
+    }
+
+    optionsData[#optionsData + 1] = {
+        type = 'description',
+        width = 'half',
+        text = 'Do things related to items.',
     }
 
     LAM:RegisterAddonPanel(UUI.name .. 'AddonOptions', panelData)

@@ -11,8 +11,10 @@ eventManager:RegisterForEvent(UUI.name, EVENT_ADD_ON_LOADED, function (eventId, 
 
     UUI.SV = ZO_SavedVars:NewAccountWide(UUI.SVName, UUI.SVVer, nil, UUI.Defaults)
 
-    UUI.CruxTracker.Initialize(UUI.SV.CruxTrackerEnabled)
+    UUI.Auras.Initialize(UUI.SV.AurasEnabled)
+    UUI.Items.Initialize(UUI.SV.ItemsEnabled)
 
     UUI.CreateSettings()
-    UUI.CruxTracker.CreateSettings()
+    UUI.Auras.CreateSettings()
+    UUI.Items.CreateSettings()
 end)
