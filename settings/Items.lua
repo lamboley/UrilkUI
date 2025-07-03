@@ -82,6 +82,30 @@ function Items.CreateSettings()
         end,
     }
 
+    -- Gold Header
+    optionsDataItems[#optionsDataItems + 1] = {
+        type = 'header',
+        name = 'Food&Drink Management',
+        width = 'full',
+    }
+
+    -- Which food&drink to consumme
+    optionsDataItems[#optionsDataItems + 1] = {
+        type = 'editbox',
+        name = 'Which food&drink to consumme',
+        getFunc = function ()
+            return Settings.foodToConsumme
+        end,
+        setFunc = function (value)
+            Settings.foodToConsumme = value
+        end,
+        width = 'full',
+        default = Defaults.foodToConsumme,
+        disabled = function()
+            return not UUI.SV.ItemsEnabled
+        end,
+    }
+
     -- Bank management
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'header',
