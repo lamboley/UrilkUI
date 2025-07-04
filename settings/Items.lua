@@ -127,18 +127,18 @@ function Items.CreateSettings()
         default = Defaults.itemDepositEnabled,
     }
 
-    -- Enable withdraw of items from bank
+    -- Automaticaly withdraw items for wrist
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'checkbox',
-        name = 'Automaticaly withdraw items from bank',
+        name = 'Automaticaly withdraw items for wrist',
         getFunc = function()
-            return Settings.itemWithdrawEnabled
+            return Settings.itemWithdrawWristEnabled
         end,
         setFunc = function(value)
-            Settings.itemWithdrawEnabled = value
+            Settings.itemWithdrawWristEnabled = value
         end,
         width = 'full',
-        default = Defaults.itemWithdrawEnabled,
+        default = Defaults.itemWithdrawWristEnabled,
     }
 
     LAM:RegisterAddonPanel(UUI.name .. 'ItemsOptions', panelDataItems)

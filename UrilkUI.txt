@@ -10,6 +10,7 @@
 
 src/UrilkUI.lua
 src/Functions.lua
+src/Constants.lua
 
 modules/Auras/Auras.lua
 modules/Items/Items.lua
