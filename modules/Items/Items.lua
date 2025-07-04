@@ -2,6 +2,7 @@ local UUI = UUI
 
 local AddSystemMessage = UUI.AddSystemMessage
 local println = UUI.println
+local debugln = UUI.debugln
 
 -- ESO API Locals
 local eventManager = GetEventManager()
@@ -26,7 +27,15 @@ Items.Defaults = {
     itemDepositEnabled = true,
     itemWithdrawWristEnabled = true,
     foodBuffEnabled = true,
-    foodToConsumme = "Orzorga's Tripe Trifle Pocket",
+    foodToConsumme = 61255,
+}
+
+-------------------------------------------------------------------------------------------
+-- TODO: There is probably a better way to do that. I should be able to use the name of
+--       the food. There is also probably a way to not duplicate the abilityId.
+local foodAbilityID = {
+    [61255] = 'Braised Rabbit with Spring Vegetables',
+    -- 61255 = "Orzorga's Tripe Trifle Pocket",
 }
 
 local wristItemsName = {
@@ -46,7 +55,7 @@ local wristItemsName = {
     ["Muthsera's Remorse"] = true,
 }
 
-local function findEmptySlotInBagpack(prevIndex, lastIndex)
+local function FindEmptySlotInBagpack(prevIndex, lastIndex)
     local slotIndex = prevIndex or -1
     while slotIndex < lastIndex do
         slotIndex = slotIndex + 1
@@ -96,18 +105,17 @@ function Items.OpenBank(eventCode, bankBag)
 
         if itemToTransfert then
             local bagSlots = GetBagSize(BAG_BANK)
-            local destSlot = findEmptySlotInBagpack(nil, bagSlots - 1)
+            local destSlot = FindEmptySlotInBagpack(nil, bagSlots - 1)
 
             for slotIndex = 0, bagSlots - 1 do
                 local slotData = SHARED_INVENTORY:GenerateSingleSlotData(BAG_BANK, slotIndex)
 
                 if slotData and slotData.stackCount > 0 and slotData.name and itemToTransfert[slotData.name] and destSlot then
-
                     CallSecureProtected('RequestMoveItem', BAG_BANK, slotIndex, BAG_BACKPACK, destSlot, 1)
                     println('Transfert', slotData.name)
                     itemToTransfert[slotData.name] = nile
 
-                    destSlot = findEmptySlotInBagpack(destSlot, bagSlots - 1)
+                    destSlot = FindEmptySlotInBagpack(destSlot, bagSlots - 1)
                 end
             end
         end
@@ -127,8 +135,8 @@ function Items.FoodBuff()
     local isBuffPresent = false
     
     for i = 1, GetNumBuffs(unitTag) do
-        local buffName = GetUnitBuffInfo(unitTag, i) 
-        if buffName == Items.SV.foodToConsumme then
+        local buffName, timeStarted, timeEnding, buffSlot, stackCount, iconFilename, deprecatedBuffType, effectType, abilityType, statusEffectType, abilityId, _, castByPlayer = GetUnitBuffInfo(unitTag, i)
+        if abilityId and foodAbilityID[abilityId] then
             isBuffPresent = true
         end
     end
@@ -137,10 +145,12 @@ function Items.FoodBuff()
         local bagSlots = GetBagSize(BAG_BACKPACK)
         for slotIndex = 0, bagSlots - 1 do
             local slotData = SHARED_INVENTORY:GenerateSingleSlotData(BAG_BACKPACK, slotIndex)
-            if slotData and slotData.stackCount > 0 and slotData.name and slotData.name == Items.SV.foodToConsumme and IsItemUsable(BAG_BACKPACK, slotIndex) then
+
+            if slotData and slotData.stackCount > 0 and slotData.name and slotData.name == foodAbilityID[Items.SV.foodToConsumme] and IsItemUsable(BAG_BACKPACK, slotIndex) then
                 local success = CallSecureProtected('UseItem', BAG_BACKPACK, slotIndex)
+                println('Eating', slotData.name)
                 if not success then
-                    debugln('ITEMS', 'Failed to consumme food.')
+                    debugln('Eating', 'Failed to consumme food.')
                 end
                 return
             end
@@ -155,5 +165,5 @@ function Items.Initialize(enabled)
     end
 
     eventManager:RegisterForEvent('Items.OpenBank', EVENT_OPEN_BANK, Items.OpenBank)
-    eventManager:RegisterForUpdate('Items.FoodBuff', 60000, Items.FoodBuff)
+    eventManager:RegisterForUpdate('Items.FoodBuff', 10000, Items.FoodBuff)
 end

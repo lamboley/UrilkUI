@@ -97,7 +97,7 @@ function Items.CreateSettings()
             return Settings.foodToConsumme
         end,
         setFunc = function (value)
-            Settings.foodToConsumme = value
+            Settings.foodToConsumme = tonumber(value)
         end,
         width = 'full',
         default = Defaults.foodToConsumme,
