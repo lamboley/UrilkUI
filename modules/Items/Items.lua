@@ -145,8 +145,8 @@ function Items.FoodBuff()
         local bagSlots = GetBagSize(BAG_BACKPACK)
         for slotIndex = 0, bagSlots - 1 do
             local slotData = SHARED_INVENTORY:GenerateSingleSlotData(BAG_BACKPACK, slotIndex)
-
-            if slotData and slotData.stackCount > 0 and slotData.name and slotData.name == foodAbilityID[Items.SV.foodToConsumme] and IsItemUsable(BAG_BACKPACK, slotIndex) then
+            if slotData and slotData.stackCount > 0 and slotData.name and slotData.name == foodAbilityID[tonumber(Items.SV.foodToConsumme)] and IsItemUsable(BAG_BACKPACK, slotIndex) then
+                
                 local success = CallSecureProtected('UseItem', BAG_BACKPACK, slotIndex)
                 println('Eating', slotData.name)
                 if not success then
