@@ -16,4 +16,5 @@ UUI.Defaults = {
     debug = false,
     AurasEnabled = true,
     ItemsEnabled = true,
+    LFGEnabled = true,
 }

@@ -49,7 +49,7 @@ function UUI.CreateSettings()
 
     -- Auras Module
     optionsData[#optionsData + 1] = {
-        type = "checkbox",
+        type = 'checkbox',
         name = 'Auras Module',
         getFunc = function ()
             return Settings.AurasEnabled
@@ -70,7 +70,7 @@ function UUI.CreateSettings()
 
     -- Items Module
     optionsData[#optionsData + 1] = {
-        type = "checkbox",
+        type = 'checkbox',
         name = 'Items Module',
         getFunc = function ()
             return Settings.ItemsEnabled
@@ -87,6 +87,27 @@ function UUI.CreateSettings()
         type = 'description',
         width = 'half',
         text = 'Do things related to items.',
+    }
+
+    -- Miscellaneous Header
+    optionsData[#optionsData + 1] = {
+        type = 'header',
+        name = 'Miscellaneous Settings',
+        width = 'full',
+    }
+
+    -- Auto Accept LFG
+    optionsData[#optionsData + 1] = {
+        type = 'checkbox',
+        name = 'Accept LFG automatically',
+        getFunc = function ()
+            return Settings.LFGEnabled
+        end,
+        setFunc = function (value)
+            Settings.LFGEnabled = value
+        end,
+        width = 'full',
+        default = Defaults.LFGEnabled,
     }
 
     LAM:RegisterAddonPanel(UUI.name .. 'AddonOptions', panelData)
