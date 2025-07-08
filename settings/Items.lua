@@ -41,34 +41,36 @@ function Items.CreateSettings()
         width = 'full',
     }
 
-    -- Gold Header
+    -- Currency Header
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'header',
-        name = 'Gold Management',
+        name = 'Currency Management',
         width = 'full',
     }
 
-    -- Enable deposit of gold
+    -- Enable deposit of currency
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'checkbox',
-        name = 'Automaticaly deposit gold in bank',
+        name = 'Automaticaly deposit currency in Bank',
+        -- tooltip = 'Automaticaly deposit currency in Bank',
         getFunc = function()
-            return Settings.goldDepositEnabled
+            return Settings.currencyDepositEnabled
         end,
         setFunc = function(value)
-            Settings.goldDepositEnabled = value
+            Settings.currencyDepositEnabled = value
         end,
         width = 'full',
-        default = Defaults.goldDepositEnabled,
+        default = Defaults.currencyDepositEnabled,
     }
 
-    -- How much golds to keep
+    -- How much Gold to keep
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'slider',
-        name = 'How much gold to keep',
+        name = 'Gold to keep',
+        tooltip = 'How much Gold to keep in inventory',
         min = 0,
         max = 100000,
-        step = 1000,
+        step = 100,
         getFunc = function()
             return Settings.goldToKeep
         end,
@@ -78,11 +80,74 @@ function Items.CreateSettings()
         width = 'full',
         default = Defaults.goldToKeep,
         disabled = function()
-            return not UUI.SV.ItemsEnabled or not Settings.goldDepositEnabled
+            return not UUI.SV.ItemsEnabled or not Settings.currencyDepositEnabled
         end,
     }
 
-    -- Gold Header
+    -- How much Alliance Point to keep
+    optionsDataItems[#optionsDataItems + 1] = {
+        type = 'slider',
+        name = 'Alliance Points to keep',
+        tooltip = 'How much Alliance Points to keep in inventory',
+        min = 0,
+        max = 100000,
+        step = 100,
+        getFunc = function()
+            return Settings.alliancePointsToKeep
+        end,
+        setFunc = function(value)
+            Settings.alliancePointsToKeep = value
+        end,
+        width = 'full',
+        default = Defaults.alliancePointsToKeep,
+        disabled = function()
+            return not UUI.SV.ItemsEnabled or not Settings.currencyDepositEnabled
+        end,
+    }
+
+    -- How much Tel Var stones to keep
+    optionsDataItems[#optionsDataItems + 1] = {
+        type = 'slider',
+        name = 'Tel Var stones to keep',
+        tooltip = 'How much Tel Var stones to keep in inventory',
+        min = 0,
+        max = 100000,
+        step = 100,
+        getFunc = function()
+            return Settings.telvarToKeep
+        end,
+        setFunc = function(value)
+            Settings.telvarToKeep = value
+        end,
+        width = 'full',
+        default = Defaults.telvarToKeep,
+        disabled = function()
+            return not UUI.SV.ItemsEnabled or not Settings.currencyDepositEnabled
+        end,
+    }
+
+    -- How much Tel Var stones to keep
+    optionsDataItems[#optionsDataItems + 1] = {
+        type = 'slider',
+        name = 'Wrist Vouchers to keep',
+        tooltip = 'How much wrist Vouchers to keep in inventory',
+        min = 0,
+        max = 100000,
+        step = 100,
+        getFunc = function()
+            return Settings.writToKeep
+        end,
+        setFunc = function(value)
+            Settings.writToKeep = value
+        end,
+        width = 'full',
+        default = Defaults.writToKeep,
+        disabled = function()
+            return not UUI.SV.ItemsEnabled or not Settings.currencyDepositEnabled
+        end,
+    }
+
+    -- Food&Drink Header
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'header',
         name = 'Food&Drink Management',
@@ -116,7 +181,7 @@ function Items.CreateSettings()
     -- Enable deposit of items in bank
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'checkbox',
-        name = 'Automaticaly deposit items in the bank',
+        name = 'Automaticaly deposit/withdraw items from the Bank',
         getFunc = function()
             return Settings.itemDepositEnabled
         end,
@@ -130,7 +195,8 @@ function Items.CreateSettings()
     -- Automaticaly withdraw items for wrist
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'checkbox',
-        name = 'Automaticaly withdraw items for wrist',
+        name = 'Withdraw items for wrist',
+        tooltip = 'Automaticaly withdraw items for wrist',
         getFunc = function()
             return Settings.itemWithdrawWristEnabled
         end,
@@ -141,6 +207,29 @@ function Items.CreateSettings()
         default = Defaults.itemWithdrawWristEnabled,
     }
 
+    -- Junk management
+    optionsDataItems[#optionsDataItems + 1] = {
+        type = 'header',
+        name = 'Junk Management',
+        width = 'full',
+    }
+
+    -- Automaticaly mark items as Junk
+    -- https://esoapi.uesp.net/current/src/ingame/inventory/inventoryslot.lua.html#1515
+    -- SetItemIsJunk(bag, index, isJunk)
+    optionsDataItems[#optionsDataItems + 1] = {
+        type = 'checkbox',
+        name = 'Automaticaly mark items as Junk',
+        getFunc = function()
+            return Settings.itemDepositEnabled
+        end,
+        setFunc = function(value)
+            Settings.itemDepositEnabled = value
+        end,
+        width = 'full',
+        default = Defaults.itemDepositEnabled,
+    }
+    
     LAM:RegisterAddonPanel(UUI.name .. 'ItemsOptions', panelDataItems)
     LAM:RegisterOptionControls(UUI.name .. 'ItemsOptions', optionsDataItems)
 end

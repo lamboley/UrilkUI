@@ -89,6 +89,27 @@ function UUI.CreateSettings()
         text = 'Do things related to items.',
     }
 
+    -- Slash Commands Module
+    optionsData[#optionsData + 1] = {
+        type = 'checkbox',
+        name = 'Slash Commands Module',
+        getFunc = function ()
+            return Settings.SlashCommandsEnabled
+        end,
+        setFunc = function (value)
+            Settings.SlashCommandsEnabled = value
+        end,
+        width = 'half',
+        warning = 'This will need a reaload to take effect.',
+        default = Defaults.SlashCommandsEnabled,
+    }
+
+    optionsData[#optionsData + 1] = {
+        type = 'description',
+        width = 'half',
+        text = 'Add some usefull slash commands.',
+    }
+
     -- Miscellaneous Header
     optionsData[#optionsData + 1] = {
         type = 'header',

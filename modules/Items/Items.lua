@@ -22,8 +22,11 @@ UUI.Items = Items
 Items.SV = {}
 Items.Defaults = {
     name = 'Items',
-    goldDepositEnabled = true,
+    currencyDepositEnabled = true,
     goldToKeep = 10000,
+    alliancePointsToKeep = 0,
+    telvarToKeep = 0,
+    writToKeep = 0,
     itemDepositEnabled = true,
     itemWithdrawWristEnabled = true,
     foodBuffEnabled = true,
@@ -70,10 +73,20 @@ end
 -- https://esoapi.uesp.net/current/src/ingame/inventory/inventoryslot.lua.html#625
 -- https://www.esoui.com/forums/showthread.php?t=2446&highlight=FindFirstEmptySlotInBag
 function Items.OpenBank(eventCode, bankBag)
-    if Items.SV.goldDepositEnabled then
+    if Items.SV.currencyDepositEnabled then
         local currentGold = GetCurrencyAmount(CURT_MONEY, CURRENCY_LOCATION_CHARACTER)
         if currentGold > Items.SV.goldToKeep then
             TransferCurrency(CURT_MONEY, currentGold-Items.SV.goldToKeep, CURRENCY_LOCATION_CHARACTER, CURRENCY_LOCATION_BANK)
+        end
+
+        local currentTelVar = GetCurrencyAmount(CURT_TELVAR_STONES, CURRENCY_LOCATION_CHARACTER)
+        if currentTelVar > Items.SV.telvarToKeep then
+            TransferCurrency(CURT_TELVAR_STONES, currentTelVar-Items.SV.telvarToKeep, CURRENCY_LOCATION_CHARACTER, CURRENCY_LOCATION_BANK)
+        end
+
+        local currentAlliancePoints = GetCurrencyAmount(CURT_ALLIANCE_POINTS, CURRENCY_LOCATION_CHARACTER)
+        if currentAlliancePoints > Items.SV.alliancePointsToKeep then
+            TransferCurrency(CURT_ALLIANCE_POINTS, currentAlliancePoints-Items.SV.alliancePointsToKeep, CURRENCY_LOCATION_CHARACTER, CURRENCY_LOCATION_BANK)
         end
     end
 

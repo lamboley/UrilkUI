@@ -12,8 +12,12 @@ src/UrilkUI.lua
 src/Functions.lua
 src/Constants.lua
 
+bindings/Bindings.xml
+
 modules/Auras/Auras.lua
 modules/Items/Items.lua
+modules/SlashCommands/SlashCommands.lua
+modules/SlashCommands/General.lua
 
 settings/Settings.lua
 settings/Auras.lua
