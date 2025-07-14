@@ -89,6 +89,27 @@ function UUI.CreateSettings()
         text = 'Do things related to items.',
     }
 
+    -- Alerts Module
+    optionsData[#optionsData + 1] = {
+        type = 'checkbox',
+        name = 'Alerts Module',
+        getFunc = function ()
+            return Settings.AlertsEnabled
+        end,
+        setFunc = function (value)
+            Settings.AlertsEnabled = value
+        end,
+        width = 'half',
+        warning = 'This will need a reload to take effect.',
+        default = Defaults.AlertsEnabled,
+    }
+
+    optionsData[#optionsData + 1] = {
+        type = 'description',
+        width = 'half',
+        text = 'Show different alerts.',
+    }
+
     -- Slash Commands Module
     optionsData[#optionsData + 1] = {
         type = 'checkbox',
@@ -100,7 +121,7 @@ function UUI.CreateSettings()
             Settings.SlashCommandsEnabled = value
         end,
         width = 'half',
-        warning = 'This will need a reaload to take effect.',
+        warning = 'This will need a reload to take effect.',
         default = Defaults.SlashCommandsEnabled,
     }
 

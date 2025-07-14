@@ -16,12 +16,14 @@ bindings/Bindings.xml
 
 modules/Auras/Auras.lua
 modules/Items/Items.lua
+modules/Alerts/Alerts.lua
 modules/SlashCommands/SlashCommands.lua
 modules/SlashCommands/General.lua
 
 settings/Settings.lua
 settings/Auras.lua
 settings/Items.lua
+settings/Alerts.lua
 
 src/Initialize.lua
 

@@ -117,6 +117,8 @@ function Items.OpenBank(eventCode, bankBag)
 	    end
 
         if itemToTransfert then
+            SHARED_INVENTORY:GetOrCreateBagCache(BAG_BANK)
+
             local bagSlots = GetBagSize(BAG_BANK)
             local destSlot = FindEmptySlotInBagpack(nil, bagSlots - 1)
 
@@ -126,7 +128,7 @@ function Items.OpenBank(eventCode, bankBag)
                 if slotData and slotData.stackCount > 0 and slotData.name and itemToTransfert[slotData.name] and destSlot then
                     CallSecureProtected('RequestMoveItem', BAG_BANK, slotIndex, BAG_BACKPACK, destSlot, 1)
                     println('Transfert', slotData.name)
-                    itemToTransfert[slotData.name] = nile
+                    itemToTransfert[slotData.name] = nil
 
                     destSlot = FindEmptySlotInBagpack(destSlot, bagSlots - 1)
                 end

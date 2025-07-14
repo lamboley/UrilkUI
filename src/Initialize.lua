@@ -14,13 +14,15 @@ eventManager:RegisterForEvent(UUI.name, EVENT_ADD_ON_LOADED, function (eventId, 
 
     UUI.AutoAcceptLFG(UUI.SV.LFGEnabled)
 
-    -- UUI.SV.SlashCommandsEnabled = true
+    UUI.SV.AlertsEnabledEnabled = true
 
     UUI.Auras.Initialize(UUI.SV.AurasEnabled)
     UUI.Items.Initialize(UUI.SV.ItemsEnabled)
+    UUI.Alerts.Initialize(UUI.SV.AlertsEnabled)
     UUI.SlashCommands.Initialize(UUI.SV.SlashCommandsEnabled)
 
     UUI.CreateSettings()
     UUI.Auras.CreateSettings()
     UUI.Items.CreateSettings()
+    UUI.Alerts.CreateSettings()
 end)
