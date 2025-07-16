@@ -4,7 +4,7 @@
 ## AddOnVersion: 001
 ## Author: Urilk
 ## Description: Urilk's Addon
-## DependsOn: LibAddonMenu-2.0>=40 LibMediaProvider>=34
+## DependsOn: LibUrilkUIData>=001 LibAddonMenu-2.0>=40 LibMediaProvider>=34 
 ## APIVersion: 101039
 ## SavedVariables: UUISV
 

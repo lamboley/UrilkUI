@@ -15,6 +15,9 @@ local GetBagSize = GetBagSize
 local IsItemUsable = IsItemUsable
 local FindFirstEmptySlotInBag = FindFirstEmptySlotInBag
 local GetItemType = GetItemType
+local CanItemBeMarkedAsJunk = CanItemBeMarkedAsJunk
+local IsItemJunk = IsItemJunk
+local SetItemIsJunk= SetItemIsJunk
 
 local Items = {}
 UUI.Items = Items
@@ -33,9 +36,7 @@ Items.Defaults = {
     foodToConsumme = 61255,
 }
 
--------------------------------------------------------------------------------------------
--- TODO: There is probably a better way to do that. I should be able to use the name of
---       the food. There is also probably a way to not duplicate the abilityId.
+-- TODO: There is probably a better way to do that.
 local foodAbilityID = {
     [61255] = 'Braised Rabbit with Spring Vegetables',
     -- 61255 = "Orzorga's Tripe Trifle Pocket",
@@ -173,6 +174,19 @@ function Items.FoodBuff()
     end
 end
 
+-- https://esoapi.uesp.net/current/data/c/a/n/CanItemBeMarkedAsJunk.html
+function Items.CustomJunk()
+    local bagSlots = GetBagSize(BAG_BACKPACK)
+    for slotIndex = 0, bagSlots - 1 do
+        local slotData = SHARED_INVENTORY:GenerateSingleSlotData(BAG_BACKPACK, slotIndex)
+        if slotData and slotData.stackCount > 0 and slotData.name and LibUrilkUIData.customJunk[slotData.name] then
+            if CanItemBeMarkedAsJunk(BAG_BACKPACK, slotIndex) and not IsItemJunk(BAG_BACKPACK, slotIndex) then
+                SetItemIsJunk(BAG_BACKPACK, slotIndex, true)
+            end
+        end
+    end
+end
+
 function Items.Initialize(enabled)
     Items.SV = ZO_SavedVars:NewAccountWide(UUI.SVName, UUI.SVVer, 'Items', Items.Defaults)
     if not enabled then
@@ -180,5 +194,6 @@ function Items.Initialize(enabled)
     end
 
     eventManager:RegisterForEvent('Items.OpenBank', EVENT_OPEN_BANK, Items.OpenBank)
-    eventManager:RegisterForUpdate('Items.FoodBuff', 10000, Items.FoodBuff)
+    eventManager:RegisterForUpdate('Items.FoodBuff', 60000, Items.FoodBuff)
+    eventManager:RegisterForUpdate('Items.CustomJunk', 60000, Items.CustomJunk)
 end

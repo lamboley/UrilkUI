@@ -1,0 +1,9 @@
+## Title: LibUrilkUIData
+## Author: Urilk
+## Version: 0.0.1
+## APIVersion: 101047
+## AddOnVersion: 001
+## Description: Library for UrilkUI.
+## IsLibrary: true
+
+LibUrilkUIData.lua

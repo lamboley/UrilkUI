@@ -2,7 +2,6 @@ local UUI = UUI
 
 local AddSystemMessage = UUI.AddSystemMessage
 local println = UUI.println
-local debugln = UUI.debugln
 
 -- ESO API Locals
 local eventManager = GetEventManager()
