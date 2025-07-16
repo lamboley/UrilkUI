@@ -42,23 +42,6 @@ local foodAbilityID = {
     -- 61255 = "Orzorga's Tripe Trifle Pocket",
 }
 
-local wristItemsName = {
-    ['Damage Health Poison IX'] = true,
-    ['Damage Magicka Poison IX'] = true,
-    ['Damage Stamina Poison IX'] = true,
-    ['Drain Health Poison IX'] = true,
-    ['Essence of Health'] = true,
-    ['Essence of Magicka'] = true,
-    ['Essence of Stamina'] = true,
-    ['Essence of Ravage Health'] = true,
-    ['Firsthold Fruit and Cheese Plate'] = true,
-    ["Hagraven's Tonic"] = true,
-    ['Hearty Garlic Corn Chowder'] = true,
-    ['Lilmoth Garlic Hagfish'] = true,
-    ['Markarth Mead'] = true,
-    ["Muthsera's Remorse"] = true,
-}
-
 local function FindEmptySlotInBagpack(prevIndex, lastIndex)
     local slotIndex = prevIndex or -1
     while slotIndex < lastIndex do
@@ -70,9 +53,6 @@ local function FindEmptySlotInBagpack(prevIndex, lastIndex)
     return nil
 end
 
--- https://esoapi.uesp.net/100024/src/ingame/inventory/inventory.lua.html#2010
--- https://esoapi.uesp.net/current/src/ingame/inventory/inventoryslot.lua.html#625
--- https://www.esoui.com/forums/showthread.php?t=2446&highlight=FindFirstEmptySlotInBag
 function Items.OpenBank(eventCode, bankBag)
     if Items.SV.currencyDepositEnabled then
         local currentGold = GetCurrencyAmount(CURT_MONEY, CURRENCY_LOCATION_CHARACTER)
@@ -112,7 +92,7 @@ function Items.OpenBank(eventCode, bankBag)
         local bagSlots = GetBagSize(BAG_BACKPACK)
         for slotIndex = 0, bagSlots - 1 do
             local slotData = SHARED_INVENTORY:GenerateSingleSlotData(BAG_BACKPACK, slotIndex)
-            if slotData and slotData.stackCount > 0 and slotData.name and wristItemsName[slotData.name] then
+            if slotData and slotData.stackCount > 0 and slotData.name and LibUrilkUIData.wristItemsName[slotData.name] then
                 itemToTransfert[slotData.name] = nil
             end
 	    end
@@ -126,12 +106,15 @@ function Items.OpenBank(eventCode, bankBag)
             for slotIndex = 0, bagSlots - 1 do
                 local slotData = SHARED_INVENTORY:GenerateSingleSlotData(BAG_BANK, slotIndex)
 
-                if slotData and slotData.stackCount > 0 and slotData.name and itemToTransfert[slotData.name] and destSlot then
-                    CallSecureProtected('RequestMoveItem', BAG_BANK, slotIndex, BAG_BACKPACK, destSlot, 1)
-                    println('Transfert', slotData.name)
-                    itemToTransfert[slotData.name] = nil
+                if slotData and slotData.stackCount > 0 and slotData.name then
+                    if itemToTransfert[slotData.name] and destSlot then -- Wrist
+                        CallSecureProtected('RequestMoveItem', BAG_BANK, slotIndex, BAG_BACKPACK, destSlot, 1)
+                        println('Transfert', slotData.name)
+                        itemToTransfert[slotData.name] = nil
 
-                    destSlot = FindEmptySlotInBagpack(destSlot, bagSlots - 1)
+                        destSlot = FindEmptySlotInBagpack(destSlot, bagSlots - 1)
+                    -- elseif LibUrilkUIData.customJunk[slotData.name] then
+                    end
                 end
             end
         end
@@ -140,9 +123,6 @@ end
 
 local unitTag = 'player'
 
--- https://esoapi.uesp.net/100026/src/ingame/buffdebuff/buffdebuffstyles.lua.html#104
--- https://esoapi.uesp.net/100025/data/g/e/t/GetItemName.html
--- https://esoapi.uesp.net/100021/src/ingame/quickslot/quickslot.lua.html#474
 function Items.FoodBuff()
 	if IsUnitInCombat(unitTag) or Items.SV.foodToConsumme == nil or Items.SV.foodToConsumme == '' then
         return
@@ -174,7 +154,6 @@ function Items.FoodBuff()
     end
 end
 
--- https://esoapi.uesp.net/current/data/c/a/n/CanItemBeMarkedAsJunk.html
 function Items.CustomJunk()
     local bagSlots = GetBagSize(BAG_BACKPACK)
     for slotIndex = 0, bagSlots - 1 do
@@ -195,5 +174,5 @@ function Items.Initialize(enabled)
 
     eventManager:RegisterForEvent('Items.OpenBank', EVENT_OPEN_BANK, Items.OpenBank)
     eventManager:RegisterForUpdate('Items.FoodBuff', 60000, Items.FoodBuff)
-    eventManager:RegisterForUpdate('Items.CustomJunk', 60000, Items.CustomJunk)
+    eventManager:RegisterForUpdate('Items.CustomJunk', 30000, Items.CustomJunk)
 end

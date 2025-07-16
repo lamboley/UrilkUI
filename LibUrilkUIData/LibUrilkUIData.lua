@@ -3,17 +3,112 @@ LibUrilkUIData = {}
 -- Global Variables
 UUI_CC_ICON_PULL = "/esoui/art/icons/ability_debuff_levitate.dds"
 
--- Items Module
-local customJunk = {
+LibUrilkUIData.customJunk = {
+    -- Useless Script
+    ['Bound Focus Script: Frost Damage'] = true,
+    ['Bound Focus Script: Restore Resources'] = true,
+    ['Bound Focus Script: Disease Damage'] = true,
+    ['Bound Signature Script: Growing Impact'] = true,
+    ["Bound Signature Script: Wayfarer's Mastery"] = true,
+    ["Bound Signature Script: Warmage's Defense"] = true,
+    ["Bound Signature Script: Gladiator's Tenacity"] = true,
+    ['Bound Affix Script: Mangle'] = true,
+    ['Bound Affix Script: Berserk'] = true,
+    ['Bound Affix Script: Heroism'] = true,
+    ['Bound Affix Script: Courage'] = true,
+    ['Bound Affix Script: Intellect and Endurance'] = true,
+    ['Bound Affix Script: Lifesteal'] = true,
+    ['Bound Affix Script: Savagery and Prophecy'] = true,
+
+    -- Useless Poison
     ['Cloudy Gradual Ravage Health Poison IV'] = true,
+    ['Cloudy Damage Health Poison IV'] = true,
     ['Cloudy Hindering Poison IV'] = true,
+    ['Cloudy Gradual Ravage Health Poison IX'] = true,
+    ['Cloudy Damage Health Poison IX'] = true,
+    ['Cloudy Hindering Poison IX'] = true,
+
+    -- Useless Potion
     ['Draught of Health'] = true,
     ['Draught of Stamina'] = true,
     ['Draught of Magicka'] = true,
+    ['Solution of Stamina'] = true,
+    ['Solution of Health'] = true,
+    ['Solution of Magicka'] = true,
+    ['Essence of Potent Health'] = true,
+    ['Essence of Potent Magicka'] = true,
+    ['Essence of Potent Stamina'] = true,
+    ['Sip of Stamina'] = true,
+    ['Sip of Health'] = true,
+    ['Sip of Magicka'] = true,
+    ['Tincture of Magicka'] = true,
+    ['Tincture of Health'] = true,
+    ['Tincture of Stamina'] = true,
+    ['Serum of Magicka'] = true,
+    ['Serum of Stamina'] = true,
+    ['Serum of Health'] = true,
+
+    -- Treasure
+    ["Illiterate Chef's Guide to Seafood"] = true,
+    ['Inspirational Poster'] = true,
+    ['Plump Protrusions, A Spying and Selection Guide'] = true,
+    ['Ruby-Studded Book Cover'] = true,
+    ["The Lover's Guide to Birthsign Compatibility"] = true,
+    ['Detailed Apparatus Instructions'] = true,
+    ['Illicit Letters from Fargrave'] = true,
+    ['Chant Inversion Table'] = true,
+    ['Crude Chroma Scrawl'] = true,
+    ['Preserved Sheogorath Tract'] = true,
+    ["Mephala's Book of Silken Sheets"] = true,
+    ['Errinorne Ancestry Tapestry'] = true,
+
+    -- Trash
     ['Daedra Husk'] = true,
+    ['Carapace'] = true,
+    ['Foul Hide'] = true,
+    ['Dwarven Gear'] = true,
+    ['Soul Gem (Empty)'] = true,
+    ['Elemental Essence'] = true,
+    ['Membrane'] = true,
+    ['Ectoplasm'] = true,
+    ['Carapace'] = true,
+
+    -- Useless Recipe
+    ['Diagram: Nord Pot, Covered'] = true,
+    ["Recipe: Bravil's Best Beet Risotto"] = true,
+    ["Recipe: Bravil Bitter Barley Beer"] = true,
+    ["Recipe: Colovian Ginger Beer"] = true,
+    ["Recipe: Dragontail Blended Whisky"] = true,
+    ["Recipe: Firsthold Fruit and Cheese Plate"] = true,
+    ["Recipe: Fredas Night Infusion"] = true,
+    ["Recipe: Garlic-and-Pepper Venison Steak"] = true,
+    ["Recipe: Markarth Mead"] = true,
+    ["Recipe: Hagraven's Tonic"] = true,
+    ["Recipe: Hearty Garlic Corn Chowder"] = true,
+    ["Recipe: Lilmoth Garlic Hagfish"] = true,
+    ["Recipe: Melon-Baked Parmesan Pork"] = true,
+    ["Recipe: Millet and Beef Stuffed Peppers"] = true,
+    ["Recipe: Muthsera's Remorse"] = true,
+    ["Recipe: Rose Herbal Tea"] = true,
+    ["Recipe: Soothing Bard's-Throat Tea"] = true,
+    ["Recipe: Tenmar Millet-Carrot Couscous"] = true,
+    ["Recipe: Thrice-Baked Gorapple Pie"] = true,
+    ["Recipe: Tomato Garlic Chutney"] = true,
 }
 
-LibUrilkUIData.customJunk = customJunk
-
-
-LibUrilkUIData.banana = 'banana'
+LibUrilkUIData.wristItemsName = {
+    ['Damage Health Poison IX'] = true,
+    ['Damage Magicka Poison IX'] = true,
+    ['Damage Stamina Poison IX'] = true,
+    ['Drain Health Poison IX'] = true,
+    ['Essence of Health'] = true,
+    ['Essence of Magicka'] = true,
+    ['Essence of Stamina'] = true,
+    ['Essence of Ravage Health'] = true,
+    ['Firsthold Fruit and Cheese Plate'] = true,
+    ["Hagraven's Tonic"] = true,
+    ['Hearty Garlic Corn Chowder'] = true,
+    ['Lilmoth Garlic Hagfish'] = true,
+    ['Markarth Mead'] = true,
+    ["Muthsera's Remorse"] = true,
+}
