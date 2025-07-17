@@ -3,25 +3,46 @@ LibUrilkUIData = {}
 -- Global Variables
 UUI_CC_ICON_PULL = "/esoui/art/icons/ability_debuff_levitate.dds"
 
+--------------------------------------------------------------------------------
+-- Items Modules
+LibUrilkUIData.currencyToTransfert = {
+    CURT_MONEY,
+    CURT_TELVAR_STONES,
+    CURT_ALLIANCE_POINTS,
+}
+
 LibUrilkUIData.customJunk = {
     -- Useless Script
     ['Bound Focus Script: Frost Damage'] = true,
     ['Bound Focus Script: Restore Resources'] = true,
     ['Bound Focus Script: Disease Damage'] = true,
+    ['Bound Focus Script: Knockback'] = true,
+    ['Bound Focus Script: Mitigation'] = true,
+    ['Bound Focus Script: Pull'] = true,
     ['Bound Signature Script: Growing Impact'] = true,
     ["Bound Signature Script: Wayfarer's Mastery"] = true,
+    ["Bound Signature Script: Knight's Valor"] = true,
     ["Bound Signature Script: Warmage's Defense"] = true,
+    ["Bound Signature Script: Assassins Misery"] = true,
     ["Bound Signature Script: Gladiator's Tenacity"] = true,
     ['Bound Affix Script: Mangle'] = true,
     ['Bound Affix Script: Berserk'] = true,
+    ['Bound Affix Script: Protection'] = true,
     ['Bound Affix Script: Heroism'] = true,
+    ['Bound Affix Script: Force'] = true,
     ['Bound Affix Script: Courage'] = true,
+    ['Bound Affix Script: Brutality and Sorcery'] = true,
+    ['Bound Affix Script: Magickasteal'] = true,
     ['Bound Affix Script: Intellect and Endurance'] = true,
     ['Bound Affix Script: Lifesteal'] = true,
     ['Bound Affix Script: Savagery and Prophecy'] = true,
 
     -- Useless Poison
     ['Cloudy Gradual Ravage Health Poison IV'] = true,
+    ['Cloudy Damage Health Poison IV'] = true,
+    ['Cloudy Damage Health Poison I'] = true,
+    ['Cloudy Damage Health Poison II'] = true,
+    ['Cloudy Damage Health Poison III'] = true,
     ['Cloudy Damage Health Poison IV'] = true,
     ['Cloudy Hindering Poison IV'] = true,
     ['Cloudy Gradual Ravage Health Poison IX'] = true,
@@ -61,6 +82,8 @@ LibUrilkUIData.customJunk = {
     ['Preserved Sheogorath Tract'] = true,
     ["Mephala's Book of Silken Sheets"] = true,
     ['Errinorne Ancestry Tapestry'] = true,
+    ['Lost Hope Quilt'] = true,
+    ['Fine Leather Waterskin'] = true,
 
     -- Trash
     ['Daedra Husk'] = true,

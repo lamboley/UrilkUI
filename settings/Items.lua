@@ -215,8 +215,6 @@ function Items.CreateSettings()
     }
 
     -- Automaticaly mark items as Junk
-    -- https://esoapi.uesp.net/current/src/ingame/inventory/inventoryslot.lua.html#1515
-    -- SetItemIsJunk(bag, index, isJunk)
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'checkbox',
         name = 'Automaticaly mark items as Junk',

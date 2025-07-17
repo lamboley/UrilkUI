@@ -10,13 +10,19 @@
 
 src/UrilkUI.lua
 src/Functions.lua
-src/Constants.lua
 
 bindings/Bindings.xml
 
 modules/Auras/Auras.lua
+
 modules/Items/Items.lua
+modules/Items/Bank.lua
+modules/Items/Currency.lua
+modules/Items/Food.lua
+modules/Items/Junk.lua
+
 modules/Alerts/Alerts.lua
+
 modules/SlashCommands/SlashCommands.lua
 modules/SlashCommands/General.lua
 
