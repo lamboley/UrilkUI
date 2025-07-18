@@ -1,9 +1,5 @@
 local UUI = UUI
 
-local AddSystemMessage = UUI.AddSystemMessage
-local println = UUI.println
-local debugln = UUI.debugln
-
 -- ESO API Locals
 local eventManager = GetEventManager()
 local sceneManager = SCENE_MANAGER
@@ -33,15 +29,19 @@ Items.Defaults = {
     itemWithdrawWristEnabled = true,
     foodBuffEnabled = true,
     foodToConsumme = 61255,
+    treasureJunkEnabled = true,
+    junkEnabled = true,
+    trashJunkEnabled = true,
 }
 
+--- TODO: Maybe check if module is enabled before loading the event. I also
+-- unregister the event if it is disabled.
 function Items.Initialize(enabled)
-    Items.SV = ZO_SavedVars:NewAccountWide(UUI.SVName, UUI.SVVer, 'Items', Items.Defaults)
-    if not enabled then
-        return
-    end
+    if not enabled then return end
 
-    eventManager:RegisterForEvent('Items.OpenBank', EVENT_OPEN_BANK, Items.OpenBank)
+    Items.SV = ZO_SavedVars:NewAccountWide(UUI.SVName, UUI.SVVer, 'Items', Items.Defaults)
+
+    eventManager:RegisterForEvent('Items.WithdrawWristItems', EVENT_OPEN_BANK, Items.WithdrawWristItems)
     eventManager:RegisterForEvent('Items.DepositGold', EVENT_OPEN_BANK, Items.DepositGold)
     eventManager:RegisterForUpdate('Items.FoodBuff', 60000, Items.FoodBuff)
     eventManager:RegisterForUpdate('Items.CustomJunk', 10000, Items.CustomJunk)

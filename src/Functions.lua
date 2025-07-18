@@ -8,36 +8,29 @@ local eventManager = GetEventManager()
 local HasLFGReadyCheckNotification = HasLFGReadyCheckNotification
 local AcceptLFGReadyCheckNotification = AcceptLFGReadyCheckNotification
 
--- https://esoapi.uesp.net/100013/data/a/d/d/AddMessage.html
 do
-    local function println(prefix, line, ...)
-        CHAT_SYSTEM:AddMessage(table_concat({UUI.name, ' - ', prefix or 'General', ": ", line, ...}))
+    -- local function print_message(prefix, line, ...)
+    --     CHAT_SYSTEM:AddMessage(table_concat({UUI.name, ' - ', prefix or 'General', ': ', line, ...}))
+    -- end
+
+    local function print_message(line)
+        if not line then return end
+
+        CHAT_SYSTEM:AddMessage(table_concat({UUI.name, ': ', line}))
     end
 
-    UUI.println = println
+    UUI.print_message = print_message
 end
 
-do
-    local function debugln(prefix, line, ...)
-         if UUI.SV.debug then
-            CHAT_SYSTEM:AddMessage(table_concat({UUI.name, ' - ', prefix or 'General', ": ", line, ...}))
-        end
-    end
-
-    UUI.debugln = debugln
-end
-
-local function OnActivityFinderStatusUpdate(eventCode, status)
+local function on_activity_finder_status_update(_, status)
     if status == ACTIVITY_FINDER_STATUS_READY_CHECK and HasLFGReadyCheckNotification() then
         AcceptLFGReadyCheckNotification()
     end
 end
 
 function UUI.AutoAcceptLFG(enabled)
-    if not enabled then
-        return
-    end
+    if not enabled then return end
 
-    eventManager:RegisterForEvent(UUI.name, EVENT_ACTIVITY_FINDER_STATUS_UPDATE, OnActivityFinderStatusUpdate)
+    eventManager:RegisterForEvent(UUI.name, EVENT_ACTIVITY_FINDER_STATUS_UPDATE, on_activity_finder_status_update)
 end
 

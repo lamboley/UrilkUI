@@ -1,10 +1,8 @@
 local UUI = UUI
 
-local println = UUI.println
-local debugln = UUI.debugln
-
+local print_message = UUI.print_message
 local SlashCommands = UUI.SlashCommands
 
 function SlashCommands.SlashShowSlashCommands(option)
-    println('SLASH', option)
+    print_message(option)
 end

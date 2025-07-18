@@ -11,12 +11,14 @@ function UUI.CreateSettings()
         type = 'panel',
         name = UUI.name,
         displayName = UUI.name,
-        author = UUI.author .. "\n",
+        author = UUI.author.."\n",
         version = UUI.version,
         registerForRefresh = true,
         registerForDefaults = false,
     }
 
+    ------------------------------------------------------------------------
+    --  Debug Settings
     optionsData[#optionsData + 1] = {
         type = 'checkbox',
         name = 'Debug',
@@ -26,28 +28,20 @@ function UUI.CreateSettings()
         setFunc = function (value)
             Settings.debug = value
         end,
-        width = 'half',
+        width = 'full',
         default = Defaults.debug,
     }
 
-    optionsData[#optionsData + 1] = {
-        type = 'button',
-        name = 'Reload UI',
-        tooltip = 'This will reload the UI.',
-        func = function ()
-            ReloadUI('ingame')
-        end,
-        width = 'half',
-    }
-
-    -- Modules Header
+    ------------------------------------------------------------------------
+    --  Header Module
     optionsData[#optionsData + 1] = {
         type = 'header',
         name = 'Module Settings',
         width = 'full',
     }
 
-    -- Auras Module
+    ------------------------------------------------------------------------
+    --  Module: Auras
     optionsData[#optionsData + 1] = {
         type = 'checkbox',
         name = 'Auras Module',
@@ -68,7 +62,8 @@ function UUI.CreateSettings()
         text = 'Do things related to auras.',
     }
 
-    -- Items Module
+    ------------------------------------------------------------------------
+    --  Module: Items
     optionsData[#optionsData + 1] = {
         type = 'checkbox',
         name = 'Items Module',
@@ -89,7 +84,8 @@ function UUI.CreateSettings()
         text = 'Do things related to items.',
     }
 
-    -- Alerts Module
+    ------------------------------------------------------------------------
+    --  Module: Alerts
     optionsData[#optionsData + 1] = {
         type = 'checkbox',
         name = 'Alerts Module',
@@ -110,7 +106,8 @@ function UUI.CreateSettings()
         text = 'Show different alerts.',
     }
 
-    -- Slash Commands Module
+    ------------------------------------------------------------------------
+    --  Module: Slash Commands
     optionsData[#optionsData + 1] = {
         type = 'checkbox',
         name = 'Slash Commands Module',
@@ -131,14 +128,14 @@ function UUI.CreateSettings()
         text = 'Add some usefull slash commands.',
     }
 
-    -- Miscellaneous Header
+    ------------------------------------------------------------------------
+    --  Miscellaneous Settings
     optionsData[#optionsData + 1] = {
         type = 'header',
         name = 'Miscellaneous Settings',
         width = 'full',
     }
 
-    -- Auto Accept LFG
     optionsData[#optionsData + 1] = {
         type = 'checkbox',
         name = 'Accept LFG automatically',
@@ -152,6 +149,6 @@ function UUI.CreateSettings()
         default = Defaults.LFGEnabled,
     }
 
-    LAM:RegisterAddonPanel(UUI.name .. 'AddonOptions', panelData)
-    LAM:RegisterOptionControls(UUI.name .. 'AddonOptions', optionsData)
+    LAM:RegisterAddonPanel(UUI.name..'AddonOptions', panelData)
+    LAM:RegisterOptionControls(UUI.name..'AddonOptions', optionsData)
 end

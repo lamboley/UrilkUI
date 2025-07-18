@@ -1,4 +1,3 @@
-
 local UUI = UUI
 local Alerts = UUI.Alerts
 local LAM = UUI.LAM
@@ -18,7 +17,7 @@ function Alerts.CreateSettings()
         type = 'panel',
         name = zo_strformat("<<1>> - <<2>>", UUI.name, 'Alerts'),
         displayName = zo_strformat("<<1>> <<2>>", UUI.name, 'Alerts'),
-        author = UUI.author .. "\n",
+        author = UUI.author.."\n",
         version = UUI.version,
         registerForRefresh = true,
         registerForDefaults = true,
@@ -26,11 +25,15 @@ function Alerts.CreateSettings()
 
     local optionsDataAlerts = {}
 
+    ------------------------------------------------------------------------
+    -- Description: Do things related to alerts.
     optionsDataAlerts[#optionsDataAlerts + 1] = {
         type = 'description',
         text = 'Do things related to alerts.',
     }
 
+    ------------------------------------------------------------------------
+    -- Button: ReloadUI
     optionsDataAlerts[#optionsDataAlerts + 1] = {
         type = 'button',
         name = 'ReloadUI',
@@ -41,14 +44,16 @@ function Alerts.CreateSettings()
         width = 'full',
     }
 
-    -- Currency Header
+    ------------------------------------------------------------------------
+    -- Header: Currency
     optionsDataAlerts[#optionsDataAlerts + 1] = {
         type = 'header',
         name = 'Antiquities',
         width = 'full',
     }
 
-    -- Enable deposit of currency
+    ------------------------------------------------------------------------
+    -- Checkbox: Print alert when antiquities expires in 2 days
     optionsDataAlerts[#optionsDataAlerts + 1] = {
         type = 'checkbox',
         name = 'Print alert when antiquities expires in 2 days',
@@ -62,6 +67,6 @@ function Alerts.CreateSettings()
         default = Defaults.antiquitiesExpiresEnabled,
     }
 
-    LAM:RegisterAddonPanel(UUI.name .. 'AlertsOptions', panelDataAlerts)
-    LAM:RegisterOptionControls(UUI.name .. 'AlertsOptions', optionsDataAlerts)
+    LAM:RegisterAddonPanel(UUI.name..'AlertsOptions', panelDataAlerts)
+    LAM:RegisterOptionControls(UUI.name..'AlertsOptions', optionsDataAlerts)
 end

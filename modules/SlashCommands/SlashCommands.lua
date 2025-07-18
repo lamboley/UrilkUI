@@ -9,15 +9,10 @@ SlashCommands.Defaults = {
 }
 
 function SlashCommands.Initialize(enabled)
+    if not enabled then return end
+
     SlashCommands.SV = ZO_SavedVars:NewAccountWide(UUI.SVName, UUI.SVVer, 'SlashCommands', SlashCommands.Defaults)
-    if not enabled then
-        return
-    end
 
-    SlashCommands.RegisterSlashCommands()
-end
-
-function SlashCommands.RegisterSlashCommands()
     if SlashCommands.SlashShowSlashCommands then
         SLASH_COMMANDS["/ucmd"] = SlashCommands.SlashShowSlashCommands
     end

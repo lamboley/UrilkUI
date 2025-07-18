@@ -18,7 +18,7 @@ function Items.CreateSettings()
         type = 'panel',
         name = zo_strformat("<<1>> - <<2>>", UUI.name, 'Items'),
         displayName = zo_strformat("<<1>> <<2>>", UUI.name, 'Items'),
-        author = UUI.author .. "\n",
+        author = UUI.author.."\n",
         version = UUI.version,
         registerForRefresh = true,
         registerForDefaults = true,
@@ -26,11 +26,15 @@ function Items.CreateSettings()
 
     local optionsDataItems = {}
 
+    ------------------------------------------------------------------------
+    -- Description: Do things related to items.
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'description',
         text = 'Do things related to items.',
     }
 
+    ------------------------------------------------------------------------
+    -- Button: ReloadUI
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'button',
         name = 'ReloadUI',
@@ -41,18 +45,19 @@ function Items.CreateSettings()
         width = 'full',
     }
 
-    -- Currency Header
+    ------------------------------------------------------------------------
+    -- Header: Currency Management
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'header',
         name = 'Currency Management',
         width = 'full',
     }
 
-    -- Enable deposit of currency
+    ------------------------------------------------------------------------
+    -- Checkbox: Automaticaly deposit currency in Bank
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'checkbox',
         name = 'Automaticaly deposit currency in Bank',
-        -- tooltip = 'Automaticaly deposit currency in Bank',
         getFunc = function()
             return Settings.currencyDepositEnabled
         end,
@@ -63,7 +68,8 @@ function Items.CreateSettings()
         default = Defaults.currencyDepositEnabled,
     }
 
-    -- How much Gold to keep
+    ------------------------------------------------------------------------
+    -- Slider: Gold to keep
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'slider',
         name = 'Gold to keep',
@@ -84,7 +90,8 @@ function Items.CreateSettings()
         end,
     }
 
-    -- How much Alliance Point to keep
+    ------------------------------------------------------------------------
+    -- Slider: Alliance Points to keep
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'slider',
         name = 'Alliance Points to keep',
@@ -105,7 +112,8 @@ function Items.CreateSettings()
         end,
     }
 
-    -- How much Tel Var stones to keep
+    ------------------------------------------------------------------------
+    -- Slider: Tel Var stones to keep
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'slider',
         name = 'Tel Var stones to keep',
@@ -126,7 +134,8 @@ function Items.CreateSettings()
         end,
     }
 
-    -- How much Tel Var stones to keep
+    ------------------------------------------------------------------------
+    -- Slider: Wrist Vouchers to keep
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'slider',
         name = 'Wrist Vouchers to keep',
@@ -147,14 +156,16 @@ function Items.CreateSettings()
         end,
     }
 
-    -- Food&Drink Header
+    ------------------------------------------------------------------------
+    -- Header: Food&Drink Management
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'header',
         name = 'Food&Drink Management',
         width = 'full',
     }
 
-    -- Which food&drink to consumme
+    ------------------------------------------------------------------------
+    -- Editbox: Which food&drink to consumme
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'editbox',
         name = 'Which food&drink to consumme',
@@ -171,14 +182,16 @@ function Items.CreateSettings()
         end,
     }
 
-    -- Bank management
+    ------------------------------------------------------------------------
+    -- Header: Bank Management
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'header',
         name = 'Bank Management',
         width = 'full',
     }
 
-    -- Enable deposit of items in bank
+    ------------------------------------------------------------------------
+    -- Checkbox: Enable deposit of items in bank
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'checkbox',
         name = 'Automaticaly deposit/withdraw items from the Bank',
@@ -192,7 +205,8 @@ function Items.CreateSettings()
         default = Defaults.itemDepositEnabled,
     }
 
-    -- Automaticaly withdraw items for wrist
+    ------------------------------------------------------------------------
+    -- Checkbox: Automaticaly withdraw items for wrist
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'checkbox',
         name = 'Withdraw items for wrist',
@@ -207,27 +221,59 @@ function Items.CreateSettings()
         default = Defaults.itemWithdrawWristEnabled,
     }
 
-    -- Junk management
+    ------------------------------------------------------------------------
+    -- Header: Junk management
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'header',
         name = 'Junk Management',
         width = 'full',
     }
 
-    -- Automaticaly mark items as Junk
+    ------------------------------------------------------------------------
+    -- Checkbox: Automaticaly mark items as Junk
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'checkbox',
         name = 'Automaticaly mark items as Junk',
         getFunc = function()
-            return Settings.itemDepositEnabled
+            return Settings.junkEnabled
         end,
         setFunc = function(value)
-            Settings.itemDepositEnabled = value
+            Settings.junkEnabled = value
         end,
         width = 'full',
-        default = Defaults.itemDepositEnabled,
+        default = Defaults.junkEnabled,
     }
-    
-    LAM:RegisterAddonPanel(UUI.name .. 'ItemsOptions', panelDataItems)
-    LAM:RegisterOptionControls(UUI.name .. 'ItemsOptions', optionsDataItems)
+
+    ------------------------------------------------------------------------
+    -- Checkbox: Automaticaly mark all Treasure as Junk
+    optionsDataItems[#optionsDataItems + 1] = {
+        type = 'checkbox',
+        name = 'Automaticaly mark all Treasure as Junk',
+        getFunc = function()
+            return Settings.treasureJunkEnabled
+        end,
+        setFunc = function(value)
+            Settings.treasureJunkEnabled = value
+        end,
+        width = 'full',
+        default = Defaults.treasureJunkEnabled,
+    }
+
+    ------------------------------------------------------------------------
+    -- Checkbox: Automaticaly mark all Trash as Junk
+    optionsDataItems[#optionsDataItems + 1] = {
+        type = 'checkbox',
+        name = 'Automaticaly mark all Trash as Junk',
+        getFunc = function()
+            return Settings.trashJunkEnabled
+        end,
+        setFunc = function(value)
+            Settings.trashJunkEnabled = value
+        end,
+        width = 'full',
+        default = Defaults.trashJunkEnabled,
+    }
+
+    LAM:RegisterAddonPanel(UUI.name..'ItemsOptions', panelDataItems)
+    LAM:RegisterOptionControls(UUI.name..'ItemsOptions', optionsDataItems)
 end
