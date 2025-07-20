@@ -6,10 +6,8 @@ local LAM = UUI.LAM
 -- ESO API Locals
 local zo_strformat = zo_strformat
 
-function Items.CreateSettings()
-    if not UUI.SV.ItemsEnabled then
-        return
-    end
+local function CreateSettings()
+    if not UUI.SV.ItemsEnabled then return end
 
     local Defaults = Items.Defaults
     local Settings = Items.SV
@@ -274,6 +272,46 @@ function Items.CreateSettings()
         default = Defaults.trashJunkEnabled,
     }
 
+        ------------------------------------------------------------------------
+    -- Header: Repair and Recharge Management
+    optionsDataItems[#optionsDataItems + 1] = {
+        type = 'header',
+        name = 'Repair and Recharge Management',
+        width = 'full',
+    }
+
+    ------------------------------------------------------------------------
+    -- Checkbox: Automaticaly repair
+    optionsDataItems[#optionsDataItems + 1] = {
+        type = 'checkbox',
+        name = 'Automaticaly repair',
+        getFunc = function()
+            return Settings.autoRepairEnabled
+        end,
+        setFunc = function(value)
+            Settings.autoRepairEnabled = value
+        end,
+        width = 'full',
+        default = Defaults.autoRepairEnabled,
+    }
+
+    ------------------------------------------------------------------------
+    -- Checkbox: Automaticaly recharge
+    optionsDataItems[#optionsDataItems + 1] = {
+        type = 'checkbox',
+        name = 'Automaticaly recharge',
+        getFunc = function()
+            return Settings.autoRechargeEnabled
+        end,
+        setFunc = function(value)
+            Settings.autoRechargeEnabled = value
+        end,
+        width = 'full',
+        default = Defaults.autoRechargeEnabled,
+    }
+
     LAM:RegisterAddonPanel(UUI.name..'ItemsOptions', panelDataItems)
     LAM:RegisterOptionControls(UUI.name..'ItemsOptions', optionsDataItems)
 end
+
+Items.CreateSettings = CreateSettings

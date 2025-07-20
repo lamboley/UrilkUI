@@ -5,10 +5,8 @@ local LAM = UUI.LAM
 -- ESO API Locals
 local zo_strformat = zo_strformat
 
-function Alerts.CreateSettings()
-    if not UUI.SV.AlertsEnabled then
-        return
-    end
+local function CreateSettings()
+    if not UUI.SV.AlertsEnabled then return end
 
     local Defaults = Alerts.Defaults
     local Settings = Alerts.SV
@@ -70,3 +68,5 @@ function Alerts.CreateSettings()
     LAM:RegisterAddonPanel(UUI.name..'AlertsOptions', panelDataAlerts)
     LAM:RegisterOptionControls(UUI.name..'AlertsOptions', optionsDataAlerts)
 end
+
+Alerts.CreateSettings = CreateSettings

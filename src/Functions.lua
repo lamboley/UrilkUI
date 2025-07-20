@@ -7,30 +7,42 @@ local table_concat = table.concat
 local eventManager = GetEventManager()
 local HasLFGReadyCheckNotification = HasLFGReadyCheckNotification
 local AcceptLFGReadyCheckNotification = AcceptLFGReadyCheckNotification
+local GetBagSize = GetBagSize
 
 do
-    -- local function print_message(prefix, line, ...)
-    --     CHAT_SYSTEM:AddMessage(table_concat({UUI.name, ' - ', prefix or 'General', ': ', line, ...}))
-    -- end
-
-    local function print_message(line)
+    local function PrintMessage(line)
         if not line then return end
-
         CHAT_SYSTEM:AddMessage(table_concat({UUI.name, ': ', line}))
     end
 
-    UUI.print_message = print_message
+    UUI.PrintMessage = PrintMessage
 end
 
-local function on_activity_finder_status_update(_, status)
+do
+    local function GetSlotIndexFromNameInBackpack(name)
+        if not name then return end
+        for slotIndex = 0, GetBagSize(BAG_BACKPACK) - 1 do
+            local slotData = SHARED_INVENTORY:GenerateSingleSlotData(BAG_BACKPACK, slotIndex)
+            if slotData and slotData.stackCount > 0 and slotData.name == name then
+                return slotIndex
+            end
+        end
+        return
+    end
+
+    UUI.GetSlotIndexFromNameInBackpack = GetSlotIndexFromNameInBackpack
+end
+
+local function OnActivityFinderStatusUpdate(_, status)
     if status == ACTIVITY_FINDER_STATUS_READY_CHECK and HasLFGReadyCheckNotification() then
         AcceptLFGReadyCheckNotification()
     end
 end
 
-function UUI.AutoAcceptLFG(enabled)
+local function AutoAcceptLFG(enabled)
     if not enabled then return end
 
-    eventManager:RegisterForEvent(UUI.name, EVENT_ACTIVITY_FINDER_STATUS_UPDATE, on_activity_finder_status_update)
+    eventManager:RegisterForEvent(UUI.name, EVENT_ACTIVITY_FINDER_STATUS_UPDATE, OnActivityFinderStatusUpdate)
 end
 
+UUI.AutoAcceptLFG = AutoAcceptLFG

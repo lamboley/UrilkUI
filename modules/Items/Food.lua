@@ -1,6 +1,6 @@
 local UUI = UUI
 
-local print_message = UUI.print_message
+local PrintMessage = UUI.PrintMessage
 local Items = UUI.Items
 
 -- Lua Locals
@@ -22,7 +22,7 @@ local foodAbilityID = {
 
 local unitTag = 'player'
 
-function Items.FoodBuff()
+local function FoodBuff()
 	if IsUnitInCombat(unitTag) then return end
 
     local isBuffPresent = false
@@ -35,14 +35,15 @@ function Items.FoodBuff()
     end
 
     if not isBuffPresent then
-        local bagSlots = GetBagSize(BAG_BACKPACK)
-        for slotIndex = 0, bagSlots - 1 do
+        for slotIndex = 0, GetBagSize(BAG_BACKPACK) - 1 do
             local slotData = SHARED_INVENTORY:GenerateSingleSlotData(BAG_BACKPACK, slotIndex)
             if slotData and slotData.stackCount > 0 and slotData.name and slotData.name == foodAbilityID[tonumber(Items.SV.foodToConsumme)] and IsItemUsable(BAG_BACKPACK, slotIndex) then
                 CallSecureProtected('UseItem', BAG_BACKPACK, slotIndex)
-                print_message('Consumme '..slotData.name)
+                PrintMessage('Consumme '..slotData.name)
                 return
             end
         end
     end
 end
+
+Items.FoodBuff = FoodBuff

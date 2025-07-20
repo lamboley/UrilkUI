@@ -1,7 +1,7 @@
 local UUI = UUI
 
 local AddSystemMessage = UUI.AddSystemMessage
-local print_message = UUI.print_message
+local PrintMessage = UUI.PrintMessage
 
 -- ESO API Locals
 local eventManager = GetEventManager()
@@ -18,22 +18,23 @@ Alerts.Defaults = {
     antiquitiesExpiresEnabled = true,
 }
 
-local function check_lead_time()
+local function CheckLeadTime()
     local antiquityId = GetNextAntiquityId()
     while antiquityId do
         local leadExpirationTimeS = GetAntiquityLeadTimeRemainingSeconds(antiquityId)
-        if leadExpirationTimeS > 0 and leadExpirationTimeS < 172800 then
+        if leadExpirationTimeS > 0 and leadExpirationTimeS < 86400 then
             local name = GetAntiquityName(antiquityId)
-            print_message('Antiquities will expire: '..name)
+            PrintMessage('Antiquities will expire: '..name)
         end
         antiquityId = GetNextAntiquityId(antiquityId)
     end
 end
 
-function Alerts.Initialize(enabled)
+local function Initialize(enabled)
     if not enabled then return end
 
     Alerts.SV = ZO_SavedVars:NewAccountWide(UUI.SVName, UUI.SVVer, 'Alerts', Alerts.Defaults)
-
-    eventManager:RegisterForEvent('Alerts.check_lead_time', EVENT_PLAYER_ACTIVATED, check_lead_time)
+    eventManager:RegisterForEvent('Alerts.CheckLeadTime', EVENT_PLAYER_ACTIVATED, CheckLeadTime)
 end
+
+Alerts.Initialize = Initialize

@@ -1,7 +1,7 @@
 local UUI = UUI
 local LAM = UUI.LAM
 
-function UUI.CreateSettings()
+local function CreateSettings()
     local Defaults = UUI.Defaults
     local Settings = UUI.SV
 
@@ -152,3 +152,5 @@ function UUI.CreateSettings()
     LAM:RegisterAddonPanel(UUI.name..'AddonOptions', panelData)
     LAM:RegisterOptionControls(UUI.name..'AddonOptions', optionsData)
 end
+
+UUI.CreateSettings = CreateSettings

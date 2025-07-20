@@ -1,6 +1,6 @@
 local UUI = UUI
 
-local print_message = UUI.print_message
+local PrintMessage = UUI.PrintMessage
 local Items = UUI.Items
 
 -- ESO API Locals
@@ -12,7 +12,7 @@ local CallSecureProtected = CallSecureProtected
 -- @param prevIndex number: The previous slot tested.
 -- @param lastIndex number: The last index in the bagpack
 -- @return number or nil: The index number matching ITEMTYPE_NONE or nothing.
-local function find_empty_slot_in_bagpack(prevIndex, lastIndex)
+local function FindEmptySlotInBagpack(prevIndex, lastIndex)
     local slotIndex = prevIndex or -1
     while slotIndex < lastIndex do
         slotIndex = slotIndex + 1
@@ -23,10 +23,7 @@ local function find_empty_slot_in_bagpack(prevIndex, lastIndex)
     return nil
 end
 
---- TODO: There is something to change here, but I don't know what yet.
--- ZO_SharedInventoryManager:GenerateFullSlotData(optFilterFunction, ...)
--- https://esoapi.uesp.net/current/src/ingame/inventory/sharedinventory.lua.html#337
-function Items.WithdrawWristItems(eventCode, bankBag)
+local function GetPreCraftedWrist()
     if not Items.SV.itemWithdrawWristEnabled then return end
 
     local itemToTransfert = {
@@ -46,17 +43,17 @@ function Items.WithdrawWristItems(eventCode, bankBag)
         ["Muthsera's Remorse"] = true,
     }
 
-    local bagSlots = GetBagSize(BAG_BACKPACK)
-    for slotIndex = 0, bagSlots - 1 do
+    for slotIndex = 0, GetBagSize(BAG_BACKPACK) - 1 do
         local slotData = SHARED_INVENTORY:GenerateSingleSlotData(BAG_BACKPACK, slotIndex)
         if slotData and slotData.stackCount > 0 and slotData.name and LibUrilkUIData.wristItemsName[slotData.name] then
+            
             itemToTransfert[slotData.name] = nil
         end
     end
 
     if itemToTransfert then
         local bagSlots = GetBagSize(BAG_BANK)
-        local destSlot = find_empty_slot_in_bagpack(nil, bagSlots - 1)
+        local destSlot = FindEmptySlotInBagpack(nil, bagSlots - 1)
         for slotIndex = 0, bagSlots - 1 do
             local slotData = SHARED_INVENTORY:GenerateSingleSlotData(BAG_BANK, slotIndex)
 
@@ -65,13 +62,13 @@ function Items.WithdrawWristItems(eventCode, bankBag)
                     CallSecureProtected('RequestMoveItem', BAG_BANK, slotIndex, BAG_BACKPACK, destSlot, 1)
                     itemToTransfert[slotData.name] = nil
 
-                    destSlot = find_empty_slot_in_bagpack(destSlot, bagSlots - 1)
+                    destSlot = FindEmptySlotInBagpack(destSlot, bagSlots - 1)
                 end
             end
         end
 
         bagSlots = GetBagSize(BAG_SUBSCRIBER_BANK)
-        destSlot = find_empty_slot_in_bagpack(nil, bagSlots - 1)
+        destSlot = FindEmptySlotInBagpack(nil, bagSlots - 1)
         for slotIndex = 0, bagSlots - 1 do
             local slotData = SHARED_INVENTORY:GenerateSingleSlotData(BAG_SUBSCRIBER_BANK, slotIndex)
 
@@ -80,9 +77,18 @@ function Items.WithdrawWristItems(eventCode, bankBag)
                     CallSecureProtected('RequestMoveItem', BAG_SUBSCRIBER_BANK, slotIndex, BAG_BACKPACK, destSlot, 1)
                     itemToTransfert[slotData.name] = nil
 
-                    destSlot = find_empty_slot_in_bagpack(destSlot, bagSlots - 1)
+                    destSlot = FindEmptySlotInBagpack(destSlot, bagSlots - 1)
                 end
             end
         end
     end
 end
+
+--- TODO: There is something to change here, but I don't know what yet.
+-- ZO_SharedInventoryManager:GenerateFullSlotData(optFilterFunction, ...)
+-- https://esoapi.uesp.net/current/src/ingame/inventory/sharedinventory.lua.html#337
+local function HandleWithdrawAndDeposit(eventCode, bankBag)
+    GetPreCraftedWrist()
+end
+
+Items.HandleWithdrawAndDeposit = HandleWithdrawAndDeposit

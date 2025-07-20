@@ -5,7 +5,7 @@ local LAM = UUI.LAM
 -- ESO API Locals
 local zo_strformat = zo_strformat
 
-function Auras.CreateSettings()
+local function CreateSettings()
     if not UUI.SV.AurasEnabled then return end
 
     local Defaults = Auras.Defaults
@@ -50,6 +50,23 @@ function Auras.CreateSettings()
         width = 'full',
     }
 
+    ------------------------------------------------------------------------
+    -- Checkbox: Hide when not in combat
+    optionsDataAuras[#optionsDataAuras + 1] = {
+        type = 'checkbox',
+        name = 'Hide when not in combat',
+        getFunc = function()
+            return Settings.hideNotInCombat
+        end,
+        setFunc = function(value)
+            Settings.hideNotInCombat = value
+        end,
+        width = 'full',
+        default = Defaults.hideNotInCombat,
+    }
+
     LAM:RegisterAddonPanel(UUI.name..'AurasOptions', panelDataAuras)
     LAM:RegisterOptionControls(UUI.name..'AurasOptions', optionsDataAuras)
 end
+
+Auras.CreateSettings = CreateSettings

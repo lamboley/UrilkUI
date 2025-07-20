@@ -18,6 +18,7 @@ modules/Items/Bank.lua
 modules/Items/Currency.lua
 modules/Items/Food.lua
 modules/Items/Junk.lua
+modules/Items/RepairAndRecharge.lua
 
 modules/Alerts/Alerts.lua
 
