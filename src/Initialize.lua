@@ -1,24 +1,41 @@
 local UUI = UUI
 
+-----------------------------------------------------------------------------
 -- ESO API Locals
 local eventManager = GetEventManager()
+
+local function LoadSavedVars()
+    UUI.SV = ZO_SavedVars:NewAccountWide(UUI.SVName, UUI.SVVer, nil, UUI.Defaults)
+end
+
+local function RegisterEvents()
+    if UUI.SV.LFGEnabled then
+        eventManager:RegisterForEvent(UUI.name, EVENT_ACTIVITY_FINDER_STATUS_UPDATE, UUI.OnActivityFinderStatusUpdate)
+    end
+
+    if UUI.SV.antiquitiesExpiresEnabled then
+        eventManager:RegisterForEvent(UUI.name, EVENT_PLAYER_ACTIVATED, UUI.CheckLeadTime)
+    end
+end
 
 eventManager:RegisterForEvent(UUI.name, EVENT_ADD_ON_LOADED, function (eventId, addonName)
     if UUI.name ~= addonName then return end
 
     eventManager:UnregisterForEvent(addonName, eventId)
 
-    UUI.SV = ZO_SavedVars:NewAccountWide(UUI.SVName, UUI.SVVer, nil, UUI.Defaults)
-
-    UUI.AutoAcceptLFG(UUI.SV.LFGEnabled)
-
-    UUI.Auras.Initialize(UUI.SV.AurasEnabled)
-    UUI.Items.Initialize(UUI.SV.ItemsEnabled)
-    UUI.Alerts.Initialize(UUI.SV.AlertsEnabled)
-    UUI.SlashCommands.Initialize(UUI.SV.SlashCommandsEnabled)
+    LoadSavedVars()
 
     UUI.CreateSettings()
-    UUI.Auras.CreateSettings()
-    UUI.Items.CreateSettings()
-    UUI.Alerts.CreateSettings()
+
+    if UUI.SV.AurasEnabled then
+        UUI.Auras.Initialize()
+        UUI.Auras.CreateSettings()
+    end
+
+    if UUI.SV.ItemsEnabled then
+        UUI.Items.Initialize()
+        UUI.Items.CreateSettings()
+    end
+
+    RegisterEvents()
 end)

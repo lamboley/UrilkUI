@@ -1,60 +1,72 @@
 local UUI = UUI
 
+local PrintMessage = UUI.PrintMessage
+
+-----------------------------------------------------------------------------
 -- ESO API Locals
 local eventManager = GetEventManager()
-local sceneManager = SCENE_MANAGER
-local windowManager = GetWindowManager()
-local TransferCurrency = TransferCurrency
-local IsUnitInCombat = IsUnitInCombat
-local GetBagSize = GetBagSize
-local IsItemUsable = IsItemUsable
-local FindFirstEmptySlotInBag = FindFirstEmptySlotInBag
-local GetItemType = GetItemType
-local CanItemBeMarkedAsJunk = CanItemBeMarkedAsJunk
-local IsItemJunk = IsItemJunk
-local SetItemIsJunk= SetItemIsJunk
 
 local Items = {}
-UUI.Items = Items
-
+Items.moduleName = UUI.name .. 'Items'
 Items.SV = {}
 Items.Defaults = {
-    name = 'Items',
-    currencyDepositEnabled = true,
-    goldToKeep = 10000,
-    alliancePointsToKeep = 0,
-    telvarToKeep = 0,
-    writToKeep = 0,
-    itemDepositEnabled = true,
-    itemWithdrawWristEnabled = true,
-    foodBuffEnabled = true,
-    foodToConsumme = 61255,
-    treasureJunkEnabled = true,
-    junkEnabled = true,
-    trashJunkEnabled = true,
-    autoRepairEnabled = true,
-    autoRechargeEnabled = true,
+    --- _Bank
+    autoCurrencyTransfert = true,
+    amountGoldInInventory = 10000,
+    amountAlliancePointsInInventory = 0,
+    amountTelvarInInventory = 0,
+    amountWritInInventory = 0,
+    autoWithdrawWristItems = true,
+    autoStackBag = true,
+
+    --- _JunkHandler
+    autoSetJunk = true,
+    autoSetTreasureAsJunk = true,
+    autoSetTrashAsJunk = true,
+    autoSellJunk = true,
+
+    --- _OpenContainers
+    autoOpenContainer = true,
+
+    --- _RepairAndRecharge
+    autoRepair = true,
+    autoRecharge = true,
 }
 
---- TODO: Maybe check if module is enabled before loading the event. I also
--- unregister the event if it is disabled.
-local function Initialize(enabled)
-    if not enabled then return end
-
+local function LoadSavedVars()
     Items.SV = ZO_SavedVars:NewAccountWide(UUI.SVName, UUI.SVVer, 'Items', Items.Defaults)
+end
 
-    eventManager:RegisterForEvent('Items.HandleWithdrawAndDeposit', EVENT_OPEN_BANK, Items.HandleWithdrawAndDeposit)
-    eventManager:RegisterForEvent('Items.DepositGold', EVENT_OPEN_BANK, Items.DepositGold)
-    eventManager:RegisterForUpdate('Items.FoodBuff', 60000, Items.FoodBuff)
-    eventManager:RegisterForUpdate('Items.CustomJunk', 10000, Items.CustomJunk)
+local function RegisterEvents()
+    eventManager:RegisterForEvent(Items.moduleName, EVENT_OPEN_BANK, Items.OpenBank)
 
-    eventManager:RegisterForEvent('Items.RepairSingleSlot', EVENT_INVENTORY_SINGLE_SLOT_UPDATE, Items.RepairSingleSlot )
-    eventManager:AddFilterForEvent('Items.RepairSingleSlot', EVENT_INVENTORY_SINGLE_SLOT_UPDATE, REGISTER_FILTER_BAG_ID, BAG_WORN)
-    eventManager:AddFilterForEvent('Items.RepairSingleSlot', EVENT_INVENTORY_SINGLE_SLOT_UPDATE, REGISTER_FILTER_INVENTORY_UPDATE_REASON, INVENTORY_UPDATE_REASON_DURABILITY_CHANGE)
+    if Items.SV.autoSetJunk then
+        eventManager:RegisterForUpdate(Items.moduleName .. 'JunkHandler', 40000, Items.JunkHandler)
+        eventManager:RegisterForEvent(Items.moduleName, EVENT_OPEN_STORE, Items.OpenStore)
+    end
 
-    eventManager:RegisterForEvent('Items.ChargeWeapon', EVENT_INVENTORY_SINGLE_SLOT_UPDATE, Items.ChargeWeapon )
-    eventManager:AddFilterForEvent('Items.ChargeWeapon', EVENT_INVENTORY_SINGLE_SLOT_UPDATE, REGISTER_FILTER_BAG_ID, BAG_WORN)
-    eventManager:AddFilterForEvent('Items.ChargeWeapon', EVENT_INVENTORY_SINGLE_SLOT_UPDATE, REGISTER_FILTER_INVENTORY_UPDATE_REASON, INVENTORY_UPDATE_REASON_ITEM_CHARGE)
+    if Items.SV.autoRepair then
+        eventManager:RegisterForEvent(Items.moduleName, EVENT_INVENTORY_SINGLE_SLOT_UPDATE, Items.RepairSingleSlot)
+        eventManager:AddFilterForEvent(Items.moduleName, EVENT_INVENTORY_SINGLE_SLOT_UPDATE, REGISTER_FILTER_BAG_ID, BAG_WORN)
+        eventManager:AddFilterForEvent(Items.moduleName, EVENT_INVENTORY_SINGLE_SLOT_UPDATE, REGISTER_FILTER_INVENTORY_UPDATE_REASON, INVENTORY_UPDATE_REASON_DURABILITY_CHANGE)
+    end
+
+    if Items.SV.autoRecharge then
+        eventManager:RegisterForEvent(Items.moduleName, EVENT_INVENTORY_SINGLE_SLOT_UPDATE, Items.ChargeWeapon)
+        eventManager:AddFilterForEvent(Items.moduleName, EVENT_INVENTORY_SINGLE_SLOT_UPDATE, REGISTER_FILTER_BAG_ID, BAG_WORN)
+        eventManager:AddFilterForEvent(Items.moduleName, EVENT_INVENTORY_SINGLE_SLOT_UPDATE, REGISTER_FILTER_INVENTORY_UPDATE_REASON, INVENTORY_UPDATE_REASON_ITEM_CHARGE)
+    end
+
+    if Items.SV.autoOpenContainer then
+        eventManager:RegisterForUpdate(Items.moduleName .. 'OpenContainers', 60000, Items.OpenContainers)
+        eventManager:RegisterForEvent(Items.moduleName, EVENT_LOOT_UPDATED, Items.LootUpdated)
+    end
+end
+
+local function Initialize()
+    LoadSavedVars()
+    RegisterEvents()
 end
 
 Items.Initialize = Initialize
+UUI.Items = Items

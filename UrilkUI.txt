@@ -4,31 +4,26 @@
 ## AddOnVersion: 001
 ## Author: Urilk
 ## Description: Urilk's Addon
-## DependsOn: LibUrilkUIData>=001 LibAddonMenu-2.0>=40 LibMediaProvider>=34
-## APIVersion: 101039
+## DependsOn: LibUrilkUIData>=001 LibAddonMenu-2.0>=40
+## APIVersion: 101046
 ## SavedVariables: UUISV
 
 src/UrilkUI.lua
 src/Functions.lua
 
 modules/Auras/Auras.lua
+modules/Auras/_Crux.lua
+modules/Auras/_FoodBuff.lua
 
 modules/Items/Items.lua
-modules/Items/Bank.lua
-modules/Items/Currency.lua
-modules/Items/Food.lua
-modules/Items/Junk.lua
-modules/Items/RepairAndRecharge.lua
-
-modules/Alerts/Alerts.lua
-
-modules/SlashCommands/SlashCommands.lua
-modules/SlashCommands/General.lua
+modules/Items/_BankTransfert.lua
+modules/Items/_JunkHandler.lua
+modules/Items/_RepairAndRecharge.lua
+modules/Items/_OpenContainers.lua
 
 settings/Settings.lua
 settings/Auras.lua
 settings/Items.lua
-settings/Alerts.lua
 
 src/Initialize.lua
 

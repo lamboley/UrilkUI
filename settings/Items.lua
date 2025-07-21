@@ -1,8 +1,11 @@
-
 local UUI = UUI
+
+-----------------------------------------------------------------------------
+-- Addon Locals
 local Items = UUI.Items
 local LAM = UUI.LAM
 
+-----------------------------------------------------------------------------
 -- ESO API Locals
 local zo_strformat = zo_strformat
 
@@ -24,14 +27,14 @@ local function CreateSettings()
 
     local optionsDataItems = {}
 
-    ------------------------------------------------------------------------
+    -------------------------------------------------------------------------
     -- Description: Do things related to items.
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'description',
         text = 'Do things related to items.',
     }
 
-    ------------------------------------------------------------------------
+    -------------------------------------------------------------------------
     -- Button: ReloadUI
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'button',
@@ -43,7 +46,7 @@ local function CreateSettings()
         width = 'full',
     }
 
-    ------------------------------------------------------------------------
+    -------------------------------------------------------------------------
     -- Header: Currency Management
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'header',
@@ -51,22 +54,22 @@ local function CreateSettings()
         width = 'full',
     }
 
-    ------------------------------------------------------------------------
+    -------------------------------------------------------------------------
     -- Checkbox: Automaticaly deposit currency in Bank
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'checkbox',
         name = 'Automaticaly deposit currency in Bank',
         getFunc = function()
-            return Settings.currencyDepositEnabled
+            return Settings.autoCurrencyTransfert
         end,
         setFunc = function(value)
-            Settings.currencyDepositEnabled = value
+            Settings.autoCurrencyTransfert = value
         end,
         width = 'full',
-        default = Defaults.currencyDepositEnabled,
+        default = Defaults.autoCurrencyTransfert,
     }
 
-    ------------------------------------------------------------------------
+    -------------------------------------------------------------------------
     -- Slider: Gold to keep
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'slider',
@@ -76,19 +79,19 @@ local function CreateSettings()
         max = 100000,
         step = 100,
         getFunc = function()
-            return Settings.goldToKeep
+            return Settings.amountGoldInInventory
         end,
         setFunc = function(value)
-            Settings.goldToKeep = value
+            Settings.amountGoldInInventory = value
         end,
         width = 'full',
-        default = Defaults.goldToKeep,
+        default = Defaults.amountGoldInInventory,
         disabled = function()
-            return not UUI.SV.ItemsEnabled or not Settings.currencyDepositEnabled
+            return not UUI.SV.ItemsEnabled or not Settings.autoCurrencyTransfert
         end,
     }
 
-    ------------------------------------------------------------------------
+    -------------------------------------------------------------------------
     -- Slider: Alliance Points to keep
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'slider',
@@ -98,19 +101,19 @@ local function CreateSettings()
         max = 100000,
         step = 100,
         getFunc = function()
-            return Settings.alliancePointsToKeep
+            return Settings.amountAlliancePointsInInventory
         end,
         setFunc = function(value)
-            Settings.alliancePointsToKeep = value
+            Settings.amountAlliancePointsInInventory = value
         end,
         width = 'full',
-        default = Defaults.alliancePointsToKeep,
+        default = Defaults.amountAlliancePointsInInventory,
         disabled = function()
-            return not UUI.SV.ItemsEnabled or not Settings.currencyDepositEnabled
+            return not UUI.SV.ItemsEnabled or not Settings.autoCurrencyTransfert
         end,
     }
 
-    ------------------------------------------------------------------------
+    -------------------------------------------------------------------------
     -- Slider: Tel Var stones to keep
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'slider',
@@ -120,19 +123,19 @@ local function CreateSettings()
         max = 100000,
         step = 100,
         getFunc = function()
-            return Settings.telvarToKeep
+            return Settings.amountTelvarInInventory
         end,
         setFunc = function(value)
-            Settings.telvarToKeep = value
+            Settings.amountTelvarInInventory = value
         end,
         width = 'full',
-        default = Defaults.telvarToKeep,
+        default = Defaults.amountTelvarInInventory,
         disabled = function()
-            return not UUI.SV.ItemsEnabled or not Settings.currencyDepositEnabled
+            return not UUI.SV.ItemsEnabled or not Settings.autoCurrencyTransfert
         end,
     }
 
-    ------------------------------------------------------------------------
+    -------------------------------------------------------------------------
     -- Slider: Wrist Vouchers to keep
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'slider',
@@ -142,45 +145,19 @@ local function CreateSettings()
         max = 100000,
         step = 100,
         getFunc = function()
-            return Settings.writToKeep
+            return Settings.amountWritInInventory
         end,
         setFunc = function(value)
-            Settings.writToKeep = value
+            Settings.amountWritInInventory = value
         end,
         width = 'full',
-        default = Defaults.writToKeep,
+        default = Defaults.amountWritInInventory,
         disabled = function()
-            return not UUI.SV.ItemsEnabled or not Settings.currencyDepositEnabled
+            return not UUI.SV.ItemsEnabled or not Settings.autoCurrencyTransfert
         end,
     }
 
-    ------------------------------------------------------------------------
-    -- Header: Food&Drink Management
-    optionsDataItems[#optionsDataItems + 1] = {
-        type = 'header',
-        name = 'Food&Drink Management',
-        width = 'full',
-    }
-
-    ------------------------------------------------------------------------
-    -- Editbox: Which food&drink to consumme
-    optionsDataItems[#optionsDataItems + 1] = {
-        type = 'editbox',
-        name = 'Which food&drink to consumme',
-        getFunc = function ()
-            return Settings.foodToConsumme
-        end,
-        setFunc = function (value)
-            Settings.foodToConsumme = value
-        end,
-        width = 'full',
-        default = Defaults.foodToConsumme,
-        disabled = function()
-            return not UUI.SV.ItemsEnabled
-        end,
-    }
-
-    ------------------------------------------------------------------------
+    -------------------------------------------------------------------------
     -- Header: Bank Management
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'header',
@@ -188,38 +165,38 @@ local function CreateSettings()
         width = 'full',
     }
 
-    ------------------------------------------------------------------------
-    -- Checkbox: Enable deposit of items in bank
+    -------------------------------------------------------------------------
+    -- Checkbox: Automaticaly stack all bags
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'checkbox',
-        name = 'Automaticaly deposit/withdraw items from the Bank',
+        name = 'Automaticaly stack all bags',
         getFunc = function()
-            return Settings.itemDepositEnabled
+            return Settings.autoStackBag
         end,
         setFunc = function(value)
-            Settings.itemDepositEnabled = value
+            Settings.autoStackBag = value
         end,
         width = 'full',
-        default = Defaults.itemDepositEnabled,
+        default = Defaults.autoStackBag,
     }
 
-    ------------------------------------------------------------------------
+    -------------------------------------------------------------------------
     -- Checkbox: Automaticaly withdraw items for wrist
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'checkbox',
         name = 'Withdraw items for wrist',
         tooltip = 'Automaticaly withdraw items for wrist',
         getFunc = function()
-            return Settings.itemWithdrawWristEnabled
+            return Settings.autoWithdrawWristItems
         end,
         setFunc = function(value)
-            Settings.itemWithdrawWristEnabled = value
+            Settings.autoWithdrawWristItems = value
         end,
         width = 'full',
-        default = Defaults.itemWithdrawWristEnabled,
+        default = Defaults.autoWithdrawWristItems,
     }
 
-    ------------------------------------------------------------------------
+    -------------------------------------------------------------------------
     -- Header: Junk management
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'header',
@@ -227,52 +204,52 @@ local function CreateSettings()
         width = 'full',
     }
 
-    ------------------------------------------------------------------------
+    -------------------------------------------------------------------------
     -- Checkbox: Automaticaly mark items as Junk
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'checkbox',
         name = 'Automaticaly mark items as Junk',
         getFunc = function()
-            return Settings.junkEnabled
+            return Settings.autoSetJunk
         end,
         setFunc = function(value)
-            Settings.junkEnabled = value
+            Settings.autoSetJunk = value
         end,
         width = 'full',
-        default = Defaults.junkEnabled,
+        default = Defaults.autoSetJunk,
     }
 
-    ------------------------------------------------------------------------
+    -------------------------------------------------------------------------
     -- Checkbox: Automaticaly mark all Treasure as Junk
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'checkbox',
         name = 'Automaticaly mark all Treasure as Junk',
         getFunc = function()
-            return Settings.treasureJunkEnabled
+            return Settings.autoSetTreasureAsJunk
         end,
         setFunc = function(value)
-            Settings.treasureJunkEnabled = value
+            Settings.autoSetTreasureAsJunk = value
         end,
         width = 'full',
-        default = Defaults.treasureJunkEnabled,
+        default = Defaults.autoSetTreasureAsJunk,
     }
 
-    ------------------------------------------------------------------------
+    -------------------------------------------------------------------------
     -- Checkbox: Automaticaly mark all Trash as Junk
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'checkbox',
         name = 'Automaticaly mark all Trash as Junk',
         getFunc = function()
-            return Settings.trashJunkEnabled
+            return Settings.autoSetTrashAsJunk
         end,
         setFunc = function(value)
-            Settings.trashJunkEnabled = value
+            Settings.autoSetTrashAsJunk = value
         end,
         width = 'full',
-        default = Defaults.trashJunkEnabled,
+        default = Defaults.autoSetTrashAsJunk,
     }
 
-        ------------------------------------------------------------------------
+    -------------------------------------------------------------------------
     -- Header: Repair and Recharge Management
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'header',
@@ -280,34 +257,57 @@ local function CreateSettings()
         width = 'full',
     }
 
-    ------------------------------------------------------------------------
+    -------------------------------------------------------------------------
     -- Checkbox: Automaticaly repair
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'checkbox',
         name = 'Automaticaly repair',
         getFunc = function()
-            return Settings.autoRepairEnabled
+            return Settings.autoRepair
         end,
         setFunc = function(value)
-            Settings.autoRepairEnabled = value
+            Settings.autoRepair = value
         end,
         width = 'full',
-        default = Defaults.autoRepairEnabled,
+        default = Defaults.autoRepair,
     }
 
-    ------------------------------------------------------------------------
+    -------------------------------------------------------------------------
     -- Checkbox: Automaticaly recharge
     optionsDataItems[#optionsDataItems + 1] = {
         type = 'checkbox',
         name = 'Automaticaly recharge',
         getFunc = function()
-            return Settings.autoRechargeEnabled
+            return Settings.autoRecharge
         end,
         setFunc = function(value)
-            Settings.autoRechargeEnabled = value
+            Settings.autoRecharge = value
         end,
         width = 'full',
-        default = Defaults.autoRechargeEnabled,
+        default = Defaults.autoRecharge,
+    }
+
+    -------------------------------------------------------------------------
+    --  Miscellaneous Settings
+    optionsDataItems[#optionsDataItems + 1] = {
+        type = 'header',
+        name = 'Miscellaneous Settings',
+        width = 'full',
+    }
+
+    -------------------------------------------------------------------------
+    -- Checkbox: Automaticaly open container
+    optionsDataItems[#optionsDataItems + 1] = {
+        type = 'checkbox',
+        name = 'Automaticaly open container',
+        getFunc = function()
+            return Settings.autoOpenContainer
+        end,
+        setFunc = function(value)
+            Settings.autoOpenContainer = value
+        end,
+        width = 'full',
+        default = Defaults.autoOpenContainer,
     }
 
     LAM:RegisterAddonPanel(UUI.name..'ItemsOptions', panelDataItems)

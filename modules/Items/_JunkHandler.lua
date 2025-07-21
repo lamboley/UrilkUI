@@ -1,25 +1,34 @@
 local UUI = UUI
 
+-----------------------------------------------------------------------------
+-- Addon Locals
 local PrintMessage = UUI.PrintMessage
 local Items = UUI.Items
 
+-----------------------------------------------------------------------------
 -- ESO API Locals
-local CanItemBeMarkedAsJunk = CanItemBeMarkedAsJunk
-local IsItemJunk = IsItemJunk
-local SetItemIsJunk = SetItemIsJunk
 local GetBagSize = GetBagSize
-local GetItemType = GetItemType
-local GetItemTrait = GetItemTrait
+local CanItemBeMarkedAsJunk = CanItemBeMarkedAsJunk
+local IsItemJunk, SetItemIsJunk = IsItemJunk, SetItemIsJunk
+local GetItemTrait, GetItemLink, GetItemType = GetItemTrait, GetItemLink, GetItemType
+local HasAnyJunk, SellAllJunk = HasAnyJunk, SellAllJunk
 
-local function SetItemInBagAsJunk(slotIndex)
-    if CanItemBeMarkedAsJunk(BAG_BACKPACK, slotIndex) and not IsItemJunk(BAG_BACKPACK, slotIndex) then
-        SetItemIsJunk(BAG_BACKPACK, slotIndex, true)
+local function OpenStore()
+    if HasAnyJunk(BAG_BACKPACK, true) then
+        SellAllJunk()
+        PrintMessage('Sold all junk.')
     end
 end
 
-local function CustomJunk()
-    if not Items.SV.junkEnabled then return end
+local function SetItemInBagAsJunk(slotIndex)
+    if CanItemBeMarkedAsJunk(BAG_BACKPACK, slotIndex) and not IsItemJunk(BAG_BACKPACK, slotIndex) then
+        local itemLink = GetItemLink(BAG_BACKPACK, slotIndex)
+        SetItemIsJunk(BAG_BACKPACK, slotIndex, true)
+        PrintMessage('Marked ' .. itemLink .. ' as junk')
+    end
+end
 
+local function JunkHandler()
     for slotIndex = 0, GetBagSize(BAG_BACKPACK) - 1 do
         local slotData = SHARED_INVENTORY:GenerateSingleSlotData(BAG_BACKPACK, slotIndex)
         if slotData and slotData.stackCount > 0 and slotData.name then
@@ -33,7 +42,7 @@ local function CustomJunk()
                         if itemTrait and (itemTrait == ITEM_TRAIT_TYPE_WEAPON_ORNATE or itemTrait == ITEM_TRAIT_TYPE_ARMOR_ORNATE or itemTrait == ITEM_TRAIT_TYPE_JEWELRY_ORNATE)  then
                             SetItemInBagAsJunk(slotIndex) -- Is an Ornate item
                         end
-                    elseif (itemType == ITEMTYPE_TREASURE and Items.SV.treasureJunkEnabled) or itemType == ITEMTYPE_TRASH and Items.SV.trashJunkEnabled then
+                    elseif (itemType == ITEMTYPE_TREASURE and Items.SV.autoSetTreasureAsJunk) or (itemType == ITEMTYPE_TRASH and Items.SV.autoSetTrashAsJunk) then
                         SetItemInBagAsJunk(slotIndex) -- Is a treasure or a trash
                     end
                 end
@@ -42,4 +51,5 @@ local function CustomJunk()
     end
 end
 
-Items.CustomJunk = CustomJunk
+Items.JunkHandler = JunkHandler
+Items.OpenStore = OpenStore

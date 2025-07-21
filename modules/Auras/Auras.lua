@@ -1,93 +1,45 @@
 local UUI = UUI
 
--- Lua Locals
-local math_rad = math.rad
-
+-----------------------------------------------------------------------------
 -- ESO API Locals
 local eventManager = GetEventManager()
-local sceneManager = SCENE_MANAGER
-local windowManager = GetWindowManager()
 local GetUnitClassId = GetUnitClassId
-local IsUnitInCombat = IsUnitInCombat
 
 local Auras = {}
-UUI.Auras = Auras
-
+Auras.moduleName = UUI.name .. 'Auras'
 Auras.SV = {}
 Auras.Defaults = {
-    name = 'Auras',
+    -- _Crux
     stacks = 0,
     hideNotInCombat = true,
+
+    -- _FoodBuff
+    foodToConsumme = 'Dubious Camoran Throne',
 }
 
-local function OnSceneChange(_, scene)
-    if scene == SCENE_SHOWN then
-        AurasContainer:SetHidden(false)
-    else
-        AurasContainer:SetHidden(true)
-    end
-end
-
-local function OnUpdate()
-        for i=1, 3 do
-            local cruxFill = AurasContainer:GetNamedChild('cruxFill'..i)
-            if Auras.SV.stacks >= i then
-                cruxFill:SetColor(0,1,0,1)
-            else
-                cruxFill:SetColor(1,1,1,0.5)
-            end
-            if not IsUnitInCombat('player') and Auras.SV.hideNotInCombat then
-                cruxFill:SetHidden(true)
-            else
-                cruxFill:SetHidden(false)
-            end
-        end
-end
-
-local function OnEffectChangedCruxStack(_, result, _, _, _, _, _, stacks)
-    if result == EFFECT_RESULT_FADED then
-        Auras.SV.stacks = 0
-        return
-    end
-    Auras.SV.stacks = stacks
-end
-
-local function Initialize(enabled)
-    if not enabled or GetUnitClassId('player') ~= 117 then return end
-
+local function LoadSavedVars()
     Auras.SV = ZO_SavedVars:NewAccountWide(UUI.SVName, UUI.SVVer, 'Auras', Auras.Defaults)
+end
 
-    local AurasContainer = windowManager:CreateTopLevelWindow('AurasContainer')
+local function RegisterEvents()
+    eventManager:RegisterForUpdate(Auras.moduleName .. 'FoodBuff', 60000, Auras.FoodBuff)
+    eventManager:RegisterForUpdate(Auras.moduleName .. 'OnUpdate', 100, Auras.OnUpdate)
 
-    AurasContainer:SetMovable(false)
-    AurasContainer:SetMouseEnabled(true)
-    AurasContainer:SetHidden(false)
-    AurasContainer:SetDimensions(140, 180)
+    eventManager:RegisterForEvent(Auras.moduleName, EVENT_EFFECT_CHANGED, Auras.OnEffectChangedCruxStack)
+    eventManager:AddFilterForEvent(Auras.moduleName, EVENT_EFFECT_CHANGED, REGISTER_FILTER_ABILITY_ID, 184220)
+    eventManager:AddFilterForEvent(Auras.moduleName, EVENT_EFFECT_CHANGED, REGISTER_FILTER_SOURCE_COMBAT_UNIT_TYPE, COMBAT_UNIT_TYPE_PLAYER)
 
-    local rotations = { 180, 180, 180 }
-    local additionalMovement = { 0, 0, 0 }
+end
 
-    for i=1, 3 do
-        local cruxFill = windowManager:CreateControl("$(parent)cruxFill"..i, AurasContainer, CT_TEXTURE, 4)
-        cruxFill:SetDimensions(80, 80)
-        cruxFill:SetAnchor(BOTTOMLEFT, AurasContainer, BOTTOMLEFT, 0 + additionalMovement[i], -65 * i)
-        cruxFill:SetTexture("esoui/art/icons/class/gamepad/gp_class_arcanist.dds")
-        cruxFill:SetDrawLayer(1)
-        cruxFill:SetTransformRotationZ(math_rad(rotations[i]))
+local function Initialize()
+    LoadSavedVars()
+
+    if GetUnitClassId('player') == 117 then
+        Auras.CreateCruxTexture()
     end
 
-    local width, height = GuiRoot:GetDimensions()
-
-    AurasContainer:ClearAnchors()
-    AurasContainer:SetAnchor(BOTTOMLEFT, GuiRoot, CENTER, width/11, height/6)
-
-    sceneManager:GetScene('hud'):RegisterCallback('StateChange', OnSceneChange)
-    sceneManager:GetScene('hudui'):RegisterCallback('StateChange', OnSceneChange)
-
-    eventManager:RegisterForEvent('Auras.registerEventCruxUpdated', EVENT_EFFECT_CHANGED, OnEffectChangedCruxStack)
-    eventManager:AddFilterForEvent('Auras.registerEventCruxUpdated', EVENT_EFFECT_CHANGED, REGISTER_FILTER_ABILITY_ID, 184220)
-    eventManager:AddFilterForEvent('Auras.registerEventCruxUpdated', EVENT_EFFECT_CHANGED, REGISTER_FILTER_SOURCE_COMBAT_UNIT_TYPE, COMBAT_UNIT_TYPE_PLAYER)
-    eventManager:RegisterForUpdate('Auras.Update', 100, OnUpdate)
+    RegisterEvents()
 end
 
 Auras.Initialize = Initialize
+UUI.Auras = Auras

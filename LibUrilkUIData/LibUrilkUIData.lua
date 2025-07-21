@@ -1,7 +1,9 @@
 LibUrilkUIData = {}
 
--- Global Variables
-UUI_CC_ICON_PULL = "/esoui/art/icons/ability_debuff_levitate.dds"
+LibUrilkUIData.buffInfo = {
+    ['Dubious Camoran Throne'] = 89957,
+    ['Braised Rabbit with Spring Vegetables'] = 61255,
+}
 
 --------------------------------------------------------------------------------
 -- Items Modules
@@ -155,4 +157,41 @@ LibUrilkUIData.wristItemsName = {
     ['Lilmoth Garlic Hagfish'] = true,
     ['Markarth Mead'] = true,
     ["Muthsera's Remorse"] = true,
+}
+
+LibUrilkUIData.autoOpenContainersName = {
+    -- Clockwork Daily
+    ['Slag Town Coffer'] = true,
+    ['Crow-Touched Clockwork Coffer'] = true,
+
+    -- Summerset Daily
+    ['Summerset Daily Recompense'] = true,
+
+    -- Murkmire Daily
+    ['Grand Tribal Armor Crate'] = true,
+    ['Tribal Armor Crate'] = true,
+
+    -- Elsweyr Daily
+    ['Elsweyr Daily Merit Coffer'] = true,
+    ["Elsweyr Dragon Hunter's Coffer"] = true,
+    ["Half-Digested Adventurer's Backpack"] = true,
+    ['Wax-Sealed Heavy Sack'] = true,
+    ['Dragonguard Supply Cache'] = true,
+
+    -- Solstice Daily
+    ['Solstice Reward Coffer'] = true,
+
+    -- Guild Daily
+    -- ['Slag Town Coffer'] = true,
+    -- ['Crow-Touched Clockwork Coffer'] = true,
+
+    -- PvP Rewards
+    ["Battlemaster Rivyn's Competitive Reward Box"] = true,
+    ['Rewards for the Worthy'] = true,
+
+    -- Transmutation Geode
+    ['Transmutation Geode (1)'] = true,
+    ['Transmutation Geode (10)'] = true,
+    ['Transmutation Geode (25)'] = true,
+    ['Transmutation Geode (50)'] = true,
 }

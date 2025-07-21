@@ -1,4 +1,8 @@
 local UUI = UUI
+
+-----------------------------------------------------------------------------
+-- Addon Locals
+local Alerts = UUI.Alerts
 local LAM = UUI.LAM
 
 local function CreateSettings()
@@ -17,7 +21,7 @@ local function CreateSettings()
         registerForDefaults = false,
     }
 
-    ------------------------------------------------------------------------
+    -------------------------------------------------------------------------
     --  Debug Settings
     optionsData[#optionsData + 1] = {
         type = 'checkbox',
@@ -32,7 +36,7 @@ local function CreateSettings()
         default = Defaults.debug,
     }
 
-    ------------------------------------------------------------------------
+    -------------------------------------------------------------------------
     --  Header Module
     optionsData[#optionsData + 1] = {
         type = 'header',
@@ -40,7 +44,7 @@ local function CreateSettings()
         width = 'full',
     }
 
-    ------------------------------------------------------------------------
+    -------------------------------------------------------------------------
     --  Module: Auras
     optionsData[#optionsData + 1] = {
         type = 'checkbox',
@@ -62,7 +66,7 @@ local function CreateSettings()
         text = 'Do things related to auras.',
     }
 
-    ------------------------------------------------------------------------
+    -------------------------------------------------------------------------
     --  Module: Items
     optionsData[#optionsData + 1] = {
         type = 'checkbox',
@@ -84,51 +88,7 @@ local function CreateSettings()
         text = 'Do things related to items.',
     }
 
-    ------------------------------------------------------------------------
-    --  Module: Alerts
-    optionsData[#optionsData + 1] = {
-        type = 'checkbox',
-        name = 'Alerts Module',
-        getFunc = function ()
-            return Settings.AlertsEnabled
-        end,
-        setFunc = function (value)
-            Settings.AlertsEnabled = value
-        end,
-        width = 'half',
-        warning = 'This will need a reload to take effect.',
-        default = Defaults.AlertsEnabled,
-    }
-
-    optionsData[#optionsData + 1] = {
-        type = 'description',
-        width = 'half',
-        text = 'Show different alerts.',
-    }
-
-    ------------------------------------------------------------------------
-    --  Module: Slash Commands
-    optionsData[#optionsData + 1] = {
-        type = 'checkbox',
-        name = 'Slash Commands Module',
-        getFunc = function ()
-            return Settings.SlashCommandsEnabled
-        end,
-        setFunc = function (value)
-            Settings.SlashCommandsEnabled = value
-        end,
-        width = 'half',
-        warning = 'This will need a reload to take effect.',
-        default = Defaults.SlashCommandsEnabled,
-    }
-
-    optionsData[#optionsData + 1] = {
-        type = 'description',
-        width = 'half',
-        text = 'Add some usefull slash commands.',
-    }
-
-    ------------------------------------------------------------------------
+    -------------------------------------------------------------------------
     --  Miscellaneous Settings
     optionsData[#optionsData + 1] = {
         type = 'header',
@@ -136,6 +96,8 @@ local function CreateSettings()
         width = 'full',
     }
 
+    -------------------------------------------------------------------------
+    -- Checkbox: Accept LFG automatically
     optionsData[#optionsData + 1] = {
         type = 'checkbox',
         name = 'Accept LFG automatically',
@@ -147,6 +109,21 @@ local function CreateSettings()
         end,
         width = 'full',
         default = Defaults.LFGEnabled,
+    }
+
+    --------------------------------------------------------------------------
+    -- Checkbox: Print in chart when antiquities expires in less than 1 day
+    optionsData[#optionsData + 1] = {
+        type = 'checkbox',
+        name = 'Print in chart when antiquities expires in less than 1 day',
+        getFunc = function ()
+            return Settings.antiquitiesExpiresEnabled
+        end,
+        setFunc = function (value)
+            Settings.antiquitiesExpiresEnabled = value
+        end,
+        width = 'full',
+        default = Defaults.antiquitiesExpiresEnabled,
     }
 
     LAM:RegisterAddonPanel(UUI.name..'AddonOptions', panelData)

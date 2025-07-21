@@ -1,7 +1,11 @@
 local UUI = UUI
+
+-----------------------------------------------------------------------------
+-- Addon Locals
 local Auras = UUI.Auras
 local LAM = UUI.LAM
 
+-----------------------------------------------------------------------------
 -- ESO API Locals
 local zo_strformat = zo_strformat
 
@@ -42,7 +46,29 @@ local function CreateSettings()
         width = 'full',
     }
 
-    ------------------------------------------------------------------------
+    -------------------------------------------------------------------------
+    -- Header: Food&Drink Management
+    optionsDataAuras[#optionsDataAuras + 1] = {
+        type = 'header',
+        name = 'Food&Drink Management',
+        width = 'full',
+    }
+
+    -------------------------------------------------------------------------
+    -- Editbox: Which food&drink to consumme
+    optionsDataAuras[#optionsDataAuras + 1] = {
+        type = 'editbox',
+        name = 'Which food&drink to consumme',
+        getFunc = function ()
+            return Settings.foodToConsumme
+        end,
+        setFunc = function (value)
+            Settings.foodToConsumme = value
+        end,
+        width = 'full',
+        default = Defaults.foodToConsumme,
+    }
+    -------------------------------------------------------------------------
     -- Header: Crux
     optionsDataAuras[#optionsDataAuras + 1] = {
         type = 'header',
@@ -50,7 +76,7 @@ local function CreateSettings()
         width = 'full',
     }
 
-    ------------------------------------------------------------------------
+    -------------------------------------------------------------------------
     -- Checkbox: Hide when not in combat
     optionsDataAuras[#optionsDataAuras + 1] = {
         type = 'checkbox',
