@@ -29,12 +29,14 @@ eventManager:RegisterForEvent(UUI.name, EVENT_ADD_ON_LOADED, function (eventId, 
 
     if UUI.SV.AurasEnabled then
         UUI.Auras.Initialize()
-        UUI.Auras.CreateSettings()
+    end
+
+    if UUI.SV.BankingEnabled then
+        UUI.Banking.Initialize()
     end
 
     if UUI.SV.ItemsEnabled then
         UUI.Items.Initialize()
-        UUI.Items.CreateSettings()
     end
 
     RegisterEvents()

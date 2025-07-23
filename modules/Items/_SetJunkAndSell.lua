@@ -7,7 +7,7 @@ local Items = UUI.Items
 
 -----------------------------------------------------------------------------
 -- ESO API Locals
-local GetBagSize = GetBagSize
+local GetItemName = GetItemName
 local CanItemBeMarkedAsJunk = CanItemBeMarkedAsJunk
 local IsItemJunk, SetItemIsJunk = IsItemJunk, SetItemIsJunk
 local GetItemTrait, GetItemLink, GetItemType = GetItemTrait, GetItemLink, GetItemType
@@ -27,24 +27,20 @@ local function SetItemInBagAsJunk(slotIndex)
     end
 end
 
-local function JunkHandler()
-    for slotIndex = 0, GetBagSize(BAG_BACKPACK) - 1 do
-        local slotData = SHARED_INVENTORY:GenerateSingleSlotData(BAG_BACKPACK, slotIndex)
-        if slotData and slotData.stackCount > 0 and slotData.name then
-            if LibUrilkUIData.customJunk[slotData.name] then
-                SetItemInBagAsJunk(slotIndex) -- Is in custom List
-            else
-                local itemType = GetItemType(BAG_BACKPACK, slotIndex)
-                if itemType then
-                    if itemType == ITEMTYPE_WEAPON or itemType == ITEMTYPE_ARMOR then
-                        local itemTrait = GetItemTrait(BAG_BACKPACK, slotIndex)
-                        if itemTrait and (itemTrait == ITEM_TRAIT_TYPE_WEAPON_ORNATE or itemTrait == ITEM_TRAIT_TYPE_ARMOR_ORNATE or itemTrait == ITEM_TRAIT_TYPE_JEWELRY_ORNATE)  then
-                            SetItemInBagAsJunk(slotIndex) -- Is an Ornate item
-                        end
-                    elseif (itemType == ITEMTYPE_TREASURE and Items.SV.autoSetTreasureAsJunk) or (itemType == ITEMTYPE_TRASH and Items.SV.autoSetTrashAsJunk) then
-                        SetItemInBagAsJunk(slotIndex) -- Is a treasure or a trash
-                    end
+local function JunkHandler(_, bagId, slotIndex, isNew)
+    local itemName = GetItemName(BAG_BACKPACK, slotIndex)
+    if itemName and LibUrilkUIData.customJunk[itemName] then
+        SetItemInBagAsJunk(slotIndex) -- Is in custom List
+    else
+        local itemType = GetItemType(BAG_BACKPACK, slotIndex)
+        if itemType then
+            if itemType == ITEMTYPE_WEAPON or itemType == ITEMTYPE_ARMOR then
+                local itemTrait = GetItemTrait(BAG_BACKPACK, slotIndex)
+                if itemTrait and (itemTrait == ITEM_TRAIT_TYPE_WEAPON_ORNATE or itemTrait == ITEM_TRAIT_TYPE_ARMOR_ORNATE or itemTrait == ITEM_TRAIT_TYPE_JEWELRY_ORNATE)  then
+                    SetItemInBagAsJunk(slotIndex) -- Is an Ornate item
                 end
+            elseif (itemType == ITEMTYPE_TREASURE and Items.SV.autoSetTreasureAsJunk) or (itemType == ITEMTYPE_TRASH and Items.SV.autoSetTrashAsJunk) then
+                SetItemInBagAsJunk(slotIndex) -- Is a treasure or a trash
             end
         end
     end

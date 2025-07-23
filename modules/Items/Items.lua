@@ -10,15 +10,6 @@ local Items = {}
 Items.moduleName = UUI.name .. 'Items'
 Items.SV = {}
 Items.Defaults = {
-    --- _Bank
-    autoCurrencyTransfert = true,
-    amountGoldInInventory = 10000,
-    amountAlliancePointsInInventory = 0,
-    amountTelvarInInventory = 0,
-    amountWritInInventory = 0,
-    autoWithdrawWristItems = true,
-    autoStackBag = true,
-
     --- _JunkHandler
     autoSetJunk = true,
     autoSetTreasureAsJunk = true,
@@ -38,27 +29,27 @@ local function LoadSavedVars()
 end
 
 local function RegisterEvents()
-    eventManager:RegisterForEvent(Items.moduleName, EVENT_OPEN_BANK, Items.OpenBank)
-
     if Items.SV.autoSetJunk then
-        eventManager:RegisterForUpdate(Items.moduleName .. 'JunkHandler', 40000, Items.JunkHandler)
-        eventManager:RegisterForEvent(Items.moduleName, EVENT_OPEN_STORE, Items.OpenStore)
+        eventManager:RegisterForEvent(Items.moduleName .. 'JunkHandler', EVENT_INVENTORY_SINGLE_SLOT_UPDATE, Items.JunkHandler)
+        eventManager:AddFilterForEvent(Items.moduleName .. 'JunkHandler', EVENT_INVENTORY_SINGLE_SLOT_UPDATE, REGISTER_FILTER_BAG_ID, BAG_BACKPACK)
+        eventManager:RegisterForEvent(Items.moduleName .. 'JunkHandler', EVENT_OPEN_STORE, Items.OpenStore)
     end
 
     if Items.SV.autoRepair then
         eventManager:RegisterForEvent(Items.moduleName .. 'RepairSingleSlot', EVENT_INVENTORY_SINGLE_SLOT_UPDATE, Items.RepairSingleSlot)
-        eventManager:AddFilterForEvent(Items.moduleName, EVENT_INVENTORY_SINGLE_SLOT_UPDATE, REGISTER_FILTER_BAG_ID, BAG_WORN)
-        eventManager:AddFilterForEvent(Items.moduleName, EVENT_INVENTORY_SINGLE_SLOT_UPDATE, REGISTER_FILTER_INVENTORY_UPDATE_REASON, INVENTORY_UPDATE_REASON_DURABILITY_CHANGE)
+        eventManager:AddFilterForEvent(Items.moduleName .. 'RepairSingleSlot', EVENT_INVENTORY_SINGLE_SLOT_UPDATE, REGISTER_FILTER_BAG_ID, BAG_WORN)
+        eventManager:AddFilterForEvent(Items.moduleName .. 'RepairSingleSlot', EVENT_INVENTORY_SINGLE_SLOT_UPDATE, REGISTER_FILTER_INVENTORY_UPDATE_REASON, INVENTORY_UPDATE_REASON_DURABILITY_CHANGE)
     end
 
     if Items.SV.autoRecharge then
         eventManager:RegisterForEvent(Items.moduleName .. 'ChargeWeapon', EVENT_INVENTORY_SINGLE_SLOT_UPDATE, Items.ChargeWeapon)
-        eventManager:AddFilterForEvent(Items.moduleName, EVENT_INVENTORY_SINGLE_SLOT_UPDATE, REGISTER_FILTER_BAG_ID, BAG_WORN)
-        eventManager:AddFilterForEvent(Items.moduleName, EVENT_INVENTORY_SINGLE_SLOT_UPDATE, REGISTER_FILTER_INVENTORY_UPDATE_REASON, INVENTORY_UPDATE_REASON_ITEM_CHARGE)
+        eventManager:AddFilterForEvent(Items.moduleName .. 'ChargeWeapon', EVENT_INVENTORY_SINGLE_SLOT_UPDATE, REGISTER_FILTER_BAG_ID, BAG_WORN)
+        eventManager:AddFilterForEvent(Items.moduleName .. 'ChargeWeapon', EVENT_INVENTORY_SINGLE_SLOT_UPDATE, REGISTER_FILTER_INVENTORY_UPDATE_REASON, INVENTORY_UPDATE_REASON_ITEM_CHARGE)
     end
 
     if Items.SV.autoOpenContainer then
         eventManager:RegisterForEvent(Items.moduleName .. 'InventorySingleSlotUpdate', EVENT_INVENTORY_SINGLE_SLOT_UPDATE, Items.InventorySingleSlotUpdate)
+        eventManager:AddFilterForEvent(Items.moduleName .. 'InventorySingleSlotUpdate', EVENT_INVENTORY_SINGLE_SLOT_UPDATE, REGISTER_FILTER_BAG_ID, BAG_BACKPACK)
         ZO_PreHook(SYSTEMS:GetObject('loot'), 'UpdateLootWindow', Items.LootUpdated)
     end
 end

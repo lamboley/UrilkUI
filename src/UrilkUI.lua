@@ -16,6 +16,7 @@ UUI.Defaults = {
     debug = false,
     AurasEnabled = true,
     ItemsEnabled = true,
+    BankingEnabled = true,
     antiquitiesExpiresEnabled = true,
     LFGEnabled = true,
 }

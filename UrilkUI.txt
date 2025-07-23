@@ -15,15 +15,17 @@ modules/Auras/Auras.lua
 modules/Auras/_Crux.lua
 modules/Auras/_FoodBuff.lua
 
+modules/Banking/Banking.lua
+modules/Banking/_Currency.lua
+modules/Banking/_Items.lua
+
 modules/Items/Items.lua
-modules/Items/_BankDepositOrWithdraw.lua
+#modules/Items/_BankDepositOrWithdraw.lua
 modules/Items/_OpenAndLootContainer.lua
 modules/Items/_RepairAndRecharge.lua
 modules/Items/_SetJunkAndSell.lua
 
 settings/Settings.lua
-settings/Auras.lua
-settings/Items.lua
 
 src/Initialize.lua
 

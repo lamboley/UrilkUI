@@ -13,7 +13,7 @@ local GetBagSize = GetBagSize
 local CallSecureProtected, IsProtectedFunction = CallSecureProtected, IsProtectedFunction
 local GetItemLink, GetItemName = GetItemLink, GetItemName
 local FindFirstEmptySlotInBag = FindFirstEmptySlotInBag
-local LootAll, UseItem = LootAll, UseItem
+local LootAll = LootAll
 
 local function LootUpdated()
     LootAll()
@@ -41,7 +41,7 @@ local function InventorySingleSlotUpdate(_, bagId, slotIndex, isNew)
                 UseItem(bagId, slotIndex)
             end
             PrintMessage('Opening ' .. GetItemLink(BAG_BACKPACK, slotIndex))
-            eventManager:RegisterForUpdate(Items.moduleName .. 'IsThereContainerInInventory', 1000, IsThereContainerInInventory)
+            eventManager:RegisterForUpdate(Items.moduleName .. 'IsThereContainerInInventory', 2000, IsThereContainerInInventory)
         end
     end
 end

@@ -80,7 +80,7 @@ do
         while antiquityId do
             local leadExpirationTimeS = GetAntiquityLeadTimeRemainingSeconds(antiquityId)
             if leadExpirationTimeS > 0 and leadExpirationTimeS < 86400 then
-                UUI.PrintMessage('Leads will expire in |c00FF00' .. GetZoneNameById(GetAntiquityZoneId(antiquityId)) .. '|r')
+                UUI.PrintMessage('1x Lead will expire in |c00FF00' .. GetZoneNameById(GetAntiquityZoneId(antiquityId)) .. '|r')
             end
             antiquityId = GetNextAntiquityId(antiquityId)
         end
