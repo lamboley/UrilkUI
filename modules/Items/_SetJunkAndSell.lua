@@ -22,9 +22,8 @@ end
 
 local function SetItemInBagAsJunk(slotIndex)
     if CanItemBeMarkedAsJunk(BAG_BACKPACK, slotIndex) and not IsItemJunk(BAG_BACKPACK, slotIndex) then
-        local itemLink = GetItemLink(BAG_BACKPACK, slotIndex)
         SetItemIsJunk(BAG_BACKPACK, slotIndex, true)
-        PrintMessage('Marked ' .. itemLink .. ' as junk')
+        PrintMessage('Marked ' .. GetItemLink(BAG_BACKPACK, slotIndex) .. ' as junk')
     end
 end
 

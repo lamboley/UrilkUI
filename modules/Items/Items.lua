@@ -46,20 +46,20 @@ local function RegisterEvents()
     end
 
     if Items.SV.autoRepair then
-        eventManager:RegisterForEvent(Items.moduleName, EVENT_INVENTORY_SINGLE_SLOT_UPDATE, Items.RepairSingleSlot)
+        eventManager:RegisterForEvent(Items.moduleName .. 'RepairSingleSlot', EVENT_INVENTORY_SINGLE_SLOT_UPDATE, Items.RepairSingleSlot)
         eventManager:AddFilterForEvent(Items.moduleName, EVENT_INVENTORY_SINGLE_SLOT_UPDATE, REGISTER_FILTER_BAG_ID, BAG_WORN)
         eventManager:AddFilterForEvent(Items.moduleName, EVENT_INVENTORY_SINGLE_SLOT_UPDATE, REGISTER_FILTER_INVENTORY_UPDATE_REASON, INVENTORY_UPDATE_REASON_DURABILITY_CHANGE)
     end
 
     if Items.SV.autoRecharge then
-        eventManager:RegisterForEvent(Items.moduleName, EVENT_INVENTORY_SINGLE_SLOT_UPDATE, Items.ChargeWeapon)
+        eventManager:RegisterForEvent(Items.moduleName .. 'ChargeWeapon', EVENT_INVENTORY_SINGLE_SLOT_UPDATE, Items.ChargeWeapon)
         eventManager:AddFilterForEvent(Items.moduleName, EVENT_INVENTORY_SINGLE_SLOT_UPDATE, REGISTER_FILTER_BAG_ID, BAG_WORN)
         eventManager:AddFilterForEvent(Items.moduleName, EVENT_INVENTORY_SINGLE_SLOT_UPDATE, REGISTER_FILTER_INVENTORY_UPDATE_REASON, INVENTORY_UPDATE_REASON_ITEM_CHARGE)
     end
 
     if Items.SV.autoOpenContainer then
-        eventManager:RegisterForUpdate(Items.moduleName .. 'OpenContainers', 60000, Items.OpenContainers)
-        eventManager:RegisterForEvent(Items.moduleName, EVENT_LOOT_UPDATED, Items.LootUpdated)
+        eventManager:RegisterForEvent(Items.moduleName .. 'InventorySingleSlotUpdate', EVENT_INVENTORY_SINGLE_SLOT_UPDATE, Items.InventorySingleSlotUpdate)
+        ZO_PreHook(SYSTEMS:GetObject('loot'), 'UpdateLootWindow', Items.LootUpdated)
     end
 end
 

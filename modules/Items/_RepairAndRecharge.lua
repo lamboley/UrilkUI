@@ -4,7 +4,6 @@ local UUI = UUI
 -- Addon Locals
 local GetSlotIndexFromNameInBackpack = UUI.GetSlotIndexFromNameInBackpack
 local Items = UUI.Items
-local PrintMessage = UUI.PrintMessage
 
 -----------------------------------------------------------------------------
 -- ESO API Locals
@@ -20,8 +19,6 @@ local function RepairSingleSlot(_, bagId, slotIndex)
             local kitIndex = GetSlotIndexFromNameInBackpack('Equipment Repair Kit')
             if kitIndex then
                 RepairItemWithRepairKit(bagId, slotIndex, BAG_BACKPACK, kitIndex)
-            else
-                PrintMessage("No 'Equipment Repair Kit' found in inventory.")
             end
         end
     end
@@ -34,8 +31,6 @@ local function ChargeWeapon(_, bagId, slotIndex)
             local soulGemIndex = GetSlotIndexFromNameInBackpack('Soul Gem')
             if soulGemIndex then
                 ChargeItemWithSoulGem(bagId, slotIndex, BAG_BACKPACK, soulGemIndex)
-            else
-                PrintMessage("No 'Soul Gem' found in inventory.")
             end
         end
     end

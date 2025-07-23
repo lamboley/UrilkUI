@@ -60,13 +60,13 @@ local function CreateSettings()
         type = 'editbox',
         name = 'Which food&drink to consumme',
         getFunc = function ()
-            return Settings.foodToConsumme
+            return Settings.autoFoodName
         end,
         setFunc = function (value)
-            Settings.foodToConsumme = value
+            Settings.autoFoodName = value
         end,
         width = 'full',
-        default = Defaults.foodToConsumme,
+        default = Defaults.autoFoodName,
     }
     -------------------------------------------------------------------------
     -- Header: Crux

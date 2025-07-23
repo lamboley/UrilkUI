@@ -84,17 +84,29 @@ LibUrilkUIData.customJunk = {
     -- Monster Trophy
     ['Whirring Dynamo'] = true,
     ['Lashing Tentacle'] = true,
+    ['Fleshy Symbiont'] = true,
+    ['Polished Shell Shard'] = true,
+    ['Chattering Skull'] = true,
 
     -- Useless Poison
     ['Cloudy Gradual Ravage Health Poison IV'] = true,
     ['Cloudy Damage Health Poison IV'] = true,
+    ['Cloudy Damage Health Poison V'] = true,
     ['Cloudy Damage Health Poison I'] = true,
     ['Cloudy Damage Health Poison II'] = true,
     ['Cloudy Damage Health Poison III'] = true,
     ['Cloudy Hindering Poison IV'] = true,
     ['Cloudy Gradual Ravage Health Poison IX'] = true,
+    ['Cloudy Gradual Ravage Health Poison II'] = true,
+    ['Cloudy Gradual Ravage Health Poison III'] = true,
+    ['Cloudy Gradual Ravage Health Poison IV'] = true,
+    ['Cloudy Gradual Ravage Health Poison V'] = true,
     ['Cloudy Damage Health Poison IX'] = true,
     ['Cloudy Hindering Poison IX'] = true,
+    ['Cloudy Hindering Poison V'] = true,
+    ['Cloudy Hindering Poison IV'] = true,
+    ['Cloudy Hindering Poison III'] = true,
+    ['Cloudy Hindering Poison II'] = true,
 
     -- Useless Potion
     ['Draught of Health'] = true,
@@ -118,6 +130,12 @@ LibUrilkUIData.customJunk = {
     ['Dram of Magicka'] = true,
     ['Dram of Stamina'] = true,
     ['Dram of Health'] = true,
+    ['Philter of Magicka'] = true,
+    ['Philter of Stamina'] = true,
+    ['Philter of Health'] = true,
+    ['Effusion of Magicka'] = true,
+    ['Effusion of Stamina'] = true,
+    ['Effusion of Health'] = true,
 
     -- Useless Recipe
     ['Diagram: Nord Pot, Covered'] = true,
@@ -140,6 +158,7 @@ LibUrilkUIData.customJunk = {
     ["Recipe: Tenmar Millet-Carrot Couscous"] = true,
     ["Recipe: Thrice-Baked Gorapple Pie"] = true,
     ["Recipe: Tomato Garlic Chutney"] = true,
+    ["Recipe: Psijic Ambrosia, Fragment VI"] = true,
 }
 
 LibUrilkUIData.wristItemsName = {
@@ -161,6 +180,16 @@ LibUrilkUIData.wristItemsName = {
 
 LibUrilkUIData.autoOpenContainersName = {
     -- Clockwork Daily
+    ['Wrothgar Daily Contract Recompense'] = true,
+
+    -- Gold Coast Daily
+    ['Gold Coast Daily Contract Recompense'] = true,
+
+    -- Vvardenfell Daily
+    ['Hall of Justice Bounty Dispensation'] = true,
+    ["Hall of Justice Explorer's Dispensation"] = true,
+
+    -- Clockwork Daily
     ['Slag Town Coffer'] = true,
     ['Crow-Touched Clockwork Coffer'] = true,
 
@@ -170,6 +199,7 @@ LibUrilkUIData.autoOpenContainersName = {
     -- Murkmire Daily
     ['Grand Tribal Armor Crate'] = true,
     ['Tribal Armor Crate'] = true,
+    ['Tribal Boot Crate'] = true,
 
     -- Elsweyr Daily
     ['Elsweyr Daily Merit Coffer'] = true,
@@ -194,4 +224,7 @@ LibUrilkUIData.autoOpenContainersName = {
     ['Transmutation Geode (10)'] = true,
     ['Transmutation Geode (25)'] = true,
     ['Transmutation Geode (50)'] = true,
+
+    -- misc
+    ['Hidden Treasure Bag'] = true,
 }

@@ -19,10 +19,10 @@ local unitTag = 'player'
 local function FoodBuff()
 	if IsUnitInCombat(unitTag) then return end
 
-    local desiredBuffId = LibUrilkUIData.buffInfo[Auras.SV.foodToConsumme]
+    local desiredBuffId = LibUrilkUIData.buffInfo[Auras.SV.autoFoodName]
     if desiredBuffId then
         if not CheckIfBuffIsPresentById(desiredBuffId) then
-            local slotIndex = GetSlotIndexFromNameInBackpack(Auras.SV.foodToConsumme)
+            local slotIndex = GetSlotIndexFromNameInBackpack(Auras.SV.autoFoodName)
             if slotIndex and IsItemUsable(BAG_BACKPACK, slotIndex) then
                 if IsProtectedFunction('UseItem') then
                     CallSecureProtected('UseItem', BAG_BACKPACK, slotIndex)
@@ -30,11 +30,11 @@ local function FoodBuff()
                     UseItem(BAG_BACKPACK, slotIndex)
                 end
                 local itemLink = GetItemLink(BAG_BACKPACK, slotIndex)
-                PrintMessage('Consummming ' .. itemLink)
+                -- PrintMessage('Consummming ' .. itemLink)
             end
         end
     else
-        PrintDebug('Missing buffId: ' .. Auras.SV.foodToConsumme)
+        PrintDebug('Missing buffId: ' .. Auras.SV.autoFoodName)
     end
 end
 

@@ -14,6 +14,8 @@ local math_rad = math.rad
 local sceneManager = SCENE_MANAGER
 local windowManager = GetWindowManager()
 
+local cruxStacks = 0
+
 local function OnSceneChange(_, scene)
     if scene == SCENE_SHOWN then
         AurasContainer:SetHidden(false)
@@ -25,7 +27,7 @@ end
 local function OnUpdate()
     for i=1, 3 do
         local cruxFill = AurasContainer:GetNamedChild('cruxFill'..i)
-        if Auras.SV.stacks >= i then
+        if cruxStacks >= i then
             cruxFill:SetColor(0,1,0,1)
         else
             cruxFill:SetColor(1,1,1,0.5)
@@ -40,10 +42,10 @@ end
 
 local function OnEffectChangedCruxStack(_, result, _, _, _, _, _, stacks)
     if result == EFFECT_RESULT_FADED then
-        Auras.SV.stacks = 0
+        cruxStacks = 0
         return
     end
-    Auras.SV.stacks = stacks
+    cruxStacks = stacks
 end
 
 local function CreateCruxTexture()
