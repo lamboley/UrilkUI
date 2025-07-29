@@ -1,46 +1,16 @@
-local UUI = UUI
+---@class UrilkUI
+local UrilkUI = UrilkUI
 
------------------------------------------------------------------------------
--- Addon Locals
-local Alerts = UUI.Alerts
-local Auras = UUI.Auras
-local Items = UUI.Items
-local Banking = UUI.Banking
-local LAM = UUI.LAM
+local LAM = UrilkUI.LAM
+local Auras = UrilkUI.Auras
+local Items = UrilkUI.Items
+local Banking = UrilkUI.Banking
 
-local function CreateSettings()
-    local Defaults = UUI.Defaults
-    local Settings = UUI.SV
-
+function UrilkUI.CreateSettings()
     local optionsData = {}
     local optionsDataAuras = {}
     local optionsDataItems = {}
     local optionsDataBanking = {}
-
-    local panelData = {
-        type = 'panel',
-        name = UUI.name,
-        displayName = UUI.name,
-        author = UUI.author.."\n",
-        version = UUI.version,
-        registerForRefresh = true,
-        registerForDefaults = false,
-    }
-
-    -------------------------------------------------------------------------
-    --  Debug Settings
-    optionsData[#optionsData + 1] = {
-        type = 'checkbox',
-        name = 'Debug',
-        getFunc = function ()
-            return Settings.debug
-        end,
-        setFunc = function (value)
-            Settings.debug = value
-        end,
-        width = 'full',
-        default = Defaults.debug,
-    }
 
     -------------------------------------------------------------------------
     --  Header Module
@@ -56,14 +26,14 @@ local function CreateSettings()
         type = 'checkbox',
         name = 'Auras Module',
         getFunc = function ()
-            return Settings.AurasEnabled
+            return UrilkUI.SV.AurasEnabled
         end,
         setFunc = function (value)
-            Settings.AurasEnabled = value
+            UrilkUI.SV.AurasEnabled = value
         end,
         width = 'half',
         warning = 'This will need a reaload to take effect.',
-        default = Defaults.AurasEnabled,
+        default = UrilkUI.Defaults.AurasEnabled,
     }
 
     -------------------------------------------------------------------------
@@ -80,14 +50,14 @@ local function CreateSettings()
         type = 'checkbox',
         name = 'Banking Module',
         getFunc = function ()
-            return Settings.BankingEnabled
+            return UrilkUI.SV.BankingEnabled
         end,
         setFunc = function (value)
-            Settings.BankingEnabled = value
+            UrilkUI.SV.BankingEnabled = value
         end,
         width = 'half',
         warning = 'This will need a reaload to take effect.',
-        default = Defaults.BankingEnabled,
+        default = UrilkUI.Defaults.BankingEnabled,
     }
 
     -------------------------------------------------------------------------
@@ -104,14 +74,14 @@ local function CreateSettings()
         type = 'checkbox',
         name = 'Items Module',
         getFunc = function ()
-            return Settings.ItemsEnabled
+            return UrilkUI.SV.ItemsEnabled
         end,
         setFunc = function (value)
-            Settings.ItemsEnabled = value
+            UrilkUI.SV.ItemsEnabled = value
         end,
         width = 'half',
         warning = 'This will need a reaload to take effect.',
-        default = Defaults.ItemsEnabled,
+        default = UrilkUI.Defaults.ItemsEnabled,
     }
 
     -------------------------------------------------------------------------
@@ -122,7 +92,7 @@ local function CreateSettings()
         text = 'Do things related to items.',
     }
 
-    if UUI.SV.AurasEnabled then
+    if UrilkUI.SV.AurasEnabled then
         -------------------------------------------------------------------------
         -- Submenu: Auras
         optionsData[#optionsData + 1] = {
@@ -178,7 +148,7 @@ local function CreateSettings()
         }
     end
 
-    if UUI.SV.BankingEnabled then
+    if UrilkUI.SV.BankingEnabled then
         -------------------------------------------------------------------------
         -- Submenu: Banking
         optionsData[#optionsData + 1] = {
@@ -228,7 +198,7 @@ local function CreateSettings()
             width = 'full',
             default = Banking.Defaults.amountGoldInInventory,
             disabled = function()
-                return not UUI.SV.ItemsEnabled or not Banking.SV.autoCurrencyTransfert
+                return not UrilkUI.SV.ItemsEnabled or not Banking.SV.autoCurrencyTransfert
             end,
         }
 
@@ -250,7 +220,7 @@ local function CreateSettings()
             width = 'full',
             default = Banking.Defaults.amountAlliancePointsInInventory,
             disabled = function()
-                return not UUI.SV.ItemsEnabled or not Banking.SV.autoCurrencyTransfert
+                return not UrilkUI.SV.ItemsEnabled or not Banking.SV.autoCurrencyTransfert
             end,
         }
 
@@ -272,7 +242,7 @@ local function CreateSettings()
             width = 'full',
             default = Banking.Defaults.amountTelvarInInventory,
             disabled = function()
-                return not UUI.SV.ItemsEnabled or not Banking.SV.autoCurrencyTransfert
+                return not UrilkUI.SV.ItemsEnabled or not Banking.SV.autoCurrencyTransfert
             end,
         }
 
@@ -294,7 +264,7 @@ local function CreateSettings()
             width = 'full',
             default = Banking.Defaults.amountWritInInventory,
             disabled = function()
-                return not UUI.SV.ItemsEnabled or not Banking.SV.autoCurrencyTransfert
+                return not UrilkUI.SV.ItemsEnabled or not Banking.SV.autoCurrencyTransfert
             end,
         }
 
@@ -338,7 +308,7 @@ local function CreateSettings()
         }
     end
 
-    if UUI.SV.ItemsEnabled then
+    if UrilkUI.SV.ItemsEnabled then
         -------------------------------------------------------------------------
         -- Submenu: Items
         optionsData[#optionsData + 1] = {
@@ -476,13 +446,13 @@ local function CreateSettings()
         type = 'checkbox',
         name = 'Accept LFG automatically',
         getFunc = function ()
-            return Settings.LFGEnabled
+            return UrilkUI.SV.LFGEnabled
         end,
         setFunc = function (value)
-            Settings.LFGEnabled = value
+            UrilkUI.SV.LFGEnabled = value
         end,
         width = 'full',
-        default = Defaults.LFGEnabled,
+        default = UrilkUI.Defaults.LFGEnabled,
     }
 
     --------------------------------------------------------------------------
@@ -491,17 +461,23 @@ local function CreateSettings()
         type = 'checkbox',
         name = 'Print in chart when antiquities expires in less than 1 day',
         getFunc = function ()
-            return Settings.antiquitiesExpiresEnabled
+            return UrilkUI.SV.antiquitiesExpiresEnabled
         end,
         setFunc = function (value)
-            Settings.antiquitiesExpiresEnabled = value
+            UrilkUI.SV.antiquitiesExpiresEnabled = value
         end,
         width = 'full',
-        default = Defaults.antiquitiesExpiresEnabled,
+        default = UrilkUI.Defaults.antiquitiesExpiresEnabled,
     }
 
-    LAM:RegisterAddonPanel(UUI.name..'AddonOptions', panelData)
-    LAM:RegisterOptionControls(UUI.name..'AddonOptions', optionsData)
+    LAM:RegisterAddonPanel(UrilkUI.name .. 'AddonOptions', {
+        type = 'panel',
+        name = UrilkUI.name,
+        displayName = UrilkUI.name,
+        author = UrilkUI.author.."\n",
+        version = UrilkUI.version,
+        registerForRefresh = true,
+        registerForDefaults = false,
+    })
+    LAM:RegisterOptionControls(UrilkUI.name .. 'AddonOptions', optionsData)
 end
-
-UUI.CreateSettings = CreateSettings

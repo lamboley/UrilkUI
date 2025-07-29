@@ -6,24 +6,17 @@
 ## Description: Urilk's Addon
 ## DependsOn: LibUrilkUIData>=001 LibAddonMenu-2.0>=40
 ## APIVersion: 101046
-## SavedVariables: UUISV
+## SavedVariables: UrilkUISV
 
 src/UrilkUI.lua
-src/Functions.lua
+src/Helpers.lua
 
 modules/Auras/Auras.lua
 modules/Auras/_Crux.lua
-modules/Auras/_FoodBuff.lua
 
 modules/Banking/Banking.lua
-modules/Banking/_Currency.lua
-modules/Banking/_Items.lua
 
 modules/Items/Items.lua
-#modules/Items/_BankDepositOrWithdraw.lua
-modules/Items/_OpenAndLootContainer.lua
-modules/Items/_RepairAndRecharge.lua
-modules/Items/_SetJunkAndSell.lua
 
 settings/Settings.lua
 

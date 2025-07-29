@@ -1,43 +1,39 @@
-local UUI = UUI
+---@class (partial) UrilkUI
+local UrilkUI = UrilkUI
 
------------------------------------------------------------------------------
--- ESO API Locals
+--- ESO APIs
 local eventManager = GetEventManager()
 
 local function LoadSavedVars()
-    UUI.SV = ZO_SavedVars:NewAccountWide(UUI.SVName, UUI.SVVer, nil, UUI.Defaults)
+    UrilkUI.SV = ZO_SavedVars:NewAccountWide(UrilkUI.SVName, UrilkUI.SVVer, nil, UrilkUI.Defaults)
 end
 
 local function RegisterEvents()
-    if UUI.SV.LFGEnabled then
-        eventManager:RegisterForEvent(UUI.name, EVENT_ACTIVITY_FINDER_STATUS_UPDATE, UUI.OnActivityFinderStatusUpdate)
+    if UrilkUI.SV.LFGEnabled then
+        eventManager:RegisterForEvent(UrilkUI.name, EVENT_ACTIVITY_FINDER_STATUS_UPDATE, UrilkUI.OnActivityFinderStatusUpdate)
     end
 
-    if UUI.SV.antiquitiesExpiresEnabled then
-        eventManager:RegisterForEvent(UUI.name, EVENT_PLAYER_ACTIVATED, UUI.CheckLeadTime)
+    if UrilkUI.SV.antiquitiesExpiresEnabled then
+        eventManager:RegisterForEvent(UrilkUI.name, EVENT_PLAYER_ACTIVATED, UrilkUI.CheckLeadTime)
     end
 end
 
-eventManager:RegisterForEvent(UUI.name, EVENT_ADD_ON_LOADED, function (eventId, addonName)
-    if UUI.name ~= addonName then return end
+---@param eventId integer
+---@param addonName string
+eventManager:RegisterForEvent(UrilkUI.name, EVENT_ADD_ON_LOADED, function(eventId, addonName)
+    if UrilkUI.name ~= addonName then
+        return
+    end
 
     eventManager:UnregisterForEvent(addonName, eventId)
 
     LoadSavedVars()
 
-    UUI.CreateSettings()
+    UrilkUI.Auras.Initialize(UrilkUI.SV.AurasEnabled)
+    UrilkUI.Banking.Initialize(UrilkUI.SV.BankingEnabled)
+    UrilkUI.Items.Initialize(UrilkUI.SV.ItemsEnabled)
 
-    if UUI.SV.AurasEnabled then
-        UUI.Auras.Initialize()
-    end
-
-    if UUI.SV.BankingEnabled then
-        UUI.Banking.Initialize()
-    end
-
-    if UUI.SV.ItemsEnabled then
-        UUI.Items.Initialize()
-    end
+    UrilkUI.CreateSettings()
 
     RegisterEvents()
 end)
