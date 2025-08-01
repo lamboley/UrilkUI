@@ -11,6 +11,7 @@ local math_rad = math.rad
 local eventManager = GetEventManager()
 local sceneManager = SCENE_MANAGER
 local windowManager = GetWindowManager()
+local IsUnitInCombat = IsUnitInCombat
 
 local moduleName = Auras.moduleName
 
@@ -22,6 +23,30 @@ local function OnSceneChange(_, scene)
         AurasContainer:SetHidden(false)
     else
         AurasContainer:SetHidden(true)
+    end
+end
+
+local function OnEffectChanged(_, result, _, _, _, _, _, stacks)
+    if result == EFFECT_RESULT_FADED then
+        cruxStacks = 0
+        return
+    end
+    cruxStacks = stacks
+end
+
+local function OnUpdateCrux()
+    for i=1, 3 do
+        local cruxFill = AurasContainer:GetNamedChild('cruxFill'..i)
+        if cruxStacks >= i then
+            cruxFill:SetColor(0,1,0,1)
+        else
+            cruxFill:SetColor(1,1,1,0.5)
+        end
+        if not IsUnitInCombat('player') and Auras.SV.hideNotInCombat then
+            cruxFill:SetHidden(true)
+        else
+            cruxFill:SetHidden(false)
+        end
     end
 end
 
@@ -53,30 +78,11 @@ function Auras.CreateCruxTexture()
 
         sceneManager:GetScene('hud'):RegisterCallback('StateChange', OnSceneChange)
         sceneManager:GetScene('hudui'):RegisterCallback('StateChange', OnSceneChange)
-        eventManager:RegisterForEvent(moduleName, EVENT_EFFECT_CHANGED, function(_, result, _, _, _, _, _, stacks)
-            if result == EFFECT_RESULT_FADED then
-                cruxStacks = 0
-                return
-            end
-            cruxStacks = stacks
-        end)
 
+        eventManager:RegisterForEvent(moduleName, EVENT_EFFECT_CHANGED, OnEffectChanged)
         eventManager:AddFilterForEvent(moduleName, EVENT_EFFECT_CHANGED, REGISTER_FILTER_ABILITY_ID, 184220)
         eventManager:AddFilterForEvent(moduleName, EVENT_EFFECT_CHANGED, REGISTER_FILTER_SOURCE_COMBAT_UNIT_TYPE, COMBAT_UNIT_TYPE_PLAYER)
-        eventManager:RegisterForUpdate(moduleName .. 'OnUpdateCrux', 100, function()
-            for i=1, 3 do
-                local cruxFill = AurasContainer:GetNamedChild('cruxFill'..i)
-                if cruxStacks >= i then
-                    cruxFill:SetColor(0,1,0,1)
-                else
-                    cruxFill:SetColor(1,1,1,0.5)
-                end
-                if not IsUnitInCombat('player') and Auras.SV.hideNotInCombat then
-                    cruxFill:SetHidden(true)
-                else
-                    cruxFill:SetHidden(false)
-                end
-            end
-        end)
+
+        eventManager:RegisterForUpdate(moduleName .. 'OnUpdateCrux', 100, OnUpdateCrux)
     end
 end

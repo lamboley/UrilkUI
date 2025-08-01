@@ -26,11 +26,6 @@ UrilkUI.SV = {}
 UrilkUI.SVVer = 2
 UrilkUI.SVName = 'UrilkUISV'
 
-local LibUrilkUIData = LibUrilkUIData
-if not LibUrilkUIData then
-    error('LibUrilkUIData is not enabled', 2)
-end
-
 ---@class UrilkUI_Defaults_SV
 UrilkUI.Defaults = {
     -- Modules

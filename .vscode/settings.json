@@ -88,6 +88,10 @@
         "GetNumBuffs",
         "IsItemUsable",
         "GetUnitBuffInfo",
-        "ITEMTYPE_JEWELRY"
+        "ITEMTYPE_JEWELRY",
+        "EVENT_PLAYER_REINCARNATED",
+        "EVENT_PLAYER_ALIVE",
+        "IsUnitDeadOrReincarnating",
+        "zo_callLater"
     ]
 }

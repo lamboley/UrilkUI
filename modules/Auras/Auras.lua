@@ -9,6 +9,8 @@ local select = select
 
 -- ESO APIs
 local eventManager = GetEventManager()
+local IsUnitInCombat, IsItemUsable = IsUnitInCombat, IsItemUsable
+local GetNumBuffs, GetUnitBuffInfo = GetNumBuffs, GetUnitBuffInfo
 
 local moduleName = UrilkUI.name .. 'Auras'
 
@@ -29,8 +31,6 @@ Auras.SV = {}
 Auras.moduleName = moduleName
 
 local unitTag = 'player'
-
-
 
 local function RefreshFoodBuff()
     if IsUnitInCombat(unitTag) then return end

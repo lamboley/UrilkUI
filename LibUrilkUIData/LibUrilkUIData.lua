@@ -1,5 +1,7 @@
 LibUrilkUIData = {}
 
+-- itemname('Damage Health Poison IX', 'Damage Magicka Poison IX', 'Damage Stamina Poison IX', 'Drain Health Poison IX', 'Essence of Health', 'Essence of Magicka', 'Essence of Stamina', 'Essence of Ravage Health', 'Firsthold Fruit and Cheese Plate', "Hagraven's Tonic", 'Hearty Garlic Corn Chowder', "Muthsera's Remorse", 'Lilmoth Garlic Hagfish', 'Markarth Mead')
+-- isitemid(76827, 76829, 76831, 76826, 54339, 54340, 54341, 44812, 68236, 68263, 68239, 68235, 68257, 68260)
 LibUrilkUIData.buffInfo = {
     ['Dubious Camoran Throne'] = 89957,
     ['Braised Rabbit with Spring Vegetables'] = 61255,
@@ -7,6 +9,13 @@ LibUrilkUIData.buffInfo = {
 
 --------------------------------------------------------------------------------
 -- Items Modules
+LibUrilkUIData.customJunkId = {
+    [27037] = true, -- Essence of Magicka
+    [27038] = true, -- Essence of Stamina
+    [27036] = true, -- Essence of Health
+    [68217] = true,
+}
+
 LibUrilkUIData.customJunk = {
     -- Useless Focus Script
     ['Bound Focus Script: Bleed Damage'] = true,
@@ -160,23 +169,36 @@ LibUrilkUIData.customJunk = {
     ["Recipe: Thrice-Baked Gorapple Pie"] = true,
     ["Recipe: Tomato Garlic Chutney"] = true,
     ["Recipe: Psijic Ambrosia, Fragment VI"] = true,
+    ["Recipe: Psijic Ambrosia, Fragment V"] = true,
+    ["Recipe: Psijic Ambrosia, Fragment I"] = true,
+    ["Recipe: Psijic Ambrosia, Fragment II"] = true,
+    ["Recipe: Psijic Ambrosia, Fragment III"] = true,
+    ["Recipe: Psijic Ambrosia, Fragment IV"] = true,
 }
 
-LibUrilkUIData.wristItemsName = {
-    ['Damage Health Poison IX'] = true,
-    ['Damage Magicka Poison IX'] = true,
-    ['Damage Stamina Poison IX'] = true,
-    ['Drain Health Poison IX'] = true,
-    ['Essence of Health'] = true,
-    ['Essence of Magicka'] = true,
-    ['Essence of Stamina'] = true,
-    ['Essence of Ravage Health'] = true,
-    ['Firsthold Fruit and Cheese Plate'] = true,
-    ["Hagraven's Tonic"] = true,
-    ['Hearty Garlic Corn Chowder'] = true,
-    ['Lilmoth Garlic Hagfish'] = true,
-    ['Markarth Mead'] = true,
-    ["Muthsera's Remorse"] = true,
+LibUrilkUIData.wristItemsId = {
+    [76827] = true, -- Damage Health Poison IX
+    [76829] = true, -- Damage Magicka Poison IX
+    [76831] = true, -- Damage Stamina Poison IX
+    [76826] = true, -- Drain Health Poison IX
+    [54339] = true, -- Essence of Health -- Blue Entoloma, Luminous Russula
+    [54340] = true, -- Essence of Magicka - Corn Flower, Bugloss
+    [54341] = true, -- Essence of Stamina
+    [44812] = true, -- Essence of Ravage Health
+    [68236] = true, -- Firsthold Fruit and Cheese Plate
+    [68263] = true, -- Hagraven's Tonic
+    [68239] = true, -- Hearty Garlic Corn Chowder
+    [68235] = true, -- Lilmoth Garlic Hagfish
+    [68257] = true, -- Markarth Mead
+    [68260] = true, -- Muthsera's Remorse
+}
+
+LibUrilkUIData.keepItemsId = {
+    [33271] = true, -- Soul Gem
+    [30357] = true, -- Lockpick
+    [44879] = true, -- Equipment Repair Kit
+    [120763] = true, -- Dubious Camoran Throne
+    -- [27038] = true, -- Essence of Stamina
 }
 
 LibUrilkUIData.autoOpenContainersName = {
@@ -194,6 +216,7 @@ LibUrilkUIData.autoOpenContainersName = {
     ['Shipment of Cloth I'] = true,
     ['Shipment of Ingots I'] = true,
     ['Shipment of Planks I'] = true,
+    ['Shipment of Planks 1'] = true,
     ["Enchanter's Coffer II"] = true,
     ["Provisioner's Pack II"] = true,
     ["Alchemist's Vessel II"] = true,

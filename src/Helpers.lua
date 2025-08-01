@@ -8,7 +8,7 @@ local GetNextAntiquityId, GetAntiquityLeadTimeRemainingSeconds = GetNextAntiquit
 local GetZoneNameById = GetZoneNameById
 local AcceptLFGReadyCheckNotification = AcceptLFGReadyCheckNotification
 local IsProtectedFunction, CallSecureProtected = IsProtectedFunction, CallSecureProtected
-local FindFirstEmptySlotInBag = FindFirstEmptySlotInBag
+local FindFirstEmptySlotInBag, GetBagSize = FindFirstEmptySlotInBag, GetBagSize
 local GetItemName = GetItemName
 
 do
@@ -16,10 +16,6 @@ do
     ---@param name string
     ---@return number|boolean
     local function GetSlotIndexFromNameInBackpack(name)
-        if not name then
-            return false
-        end
-
         for slotIndex = 0, GetBagSize(BAG_BACKPACK) - 1 do
             local slotData = SHARED_INVENTORY:GenerateSingleSlotData(BAG_BACKPACK, slotIndex)
             if slotData and slotData.stackCount > 0 and slotData.name == name then
@@ -98,11 +94,15 @@ do
 end
 
 do
-    local function CallRequestMoveItem(sourceBagId, sourceSlotIndex, targetBagId, targetSlotIndex, stack)
+    local function CallRequestMoveItem(sourceBagId, sourceSlotIndex, targetBagId, targetSlotIndex, stack, itemLink)
         if IsProtectedFunction('RequestMoveItem') then
             CallSecureProtected('RequestMoveItem', sourceBagId, sourceSlotIndex, targetBagId, targetSlotIndex, stack)
         else
             RequestMoveItem(sourceBagId, sourceSlotIndex, targetBagId, targetSlotIndex, stack)
+        end
+
+        if itemLink ~= nil then
+            PrintMessage('Moving ' .. itemLink)
         end
     end
 

@@ -15,8 +15,15 @@ modules/Auras/Auras.lua
 modules/Auras/_Crux.lua
 
 modules/Banking/Banking.lua
+modules/Banking/_CurrencyTransfert.lua
+modules/Banking/ItemTransfert/ItemTransfert.lua
+modules/Banking/ItemTransfert/_WithdrawWrist.lua
+modules/Banking/ItemTransfert/_DepositItems.lua
+modules/Banking/ItemTransfert/_KeepAmount.lua
 
 modules/Items/Items.lua
+modules/Items/_Junk.lua
+modules/Items/_Container.lua
 
 settings/Settings.lua
 
